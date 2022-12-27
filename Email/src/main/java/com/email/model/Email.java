@@ -1,0 +1,50 @@
+package com.email.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name= "email")
+public class Email {
+    @Id
+    @GeneratedValue
+    private int id;
+    private String subject;
+    private String text;
+    private String filePath;
+
+    private Email(){
+
+    }
+    private Email(String subject, String text, String filePath){
+        this.subject= subject;
+        this.text=text;
+        this.filePath=filePath;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+}
