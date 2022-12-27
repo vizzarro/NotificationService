@@ -14,14 +14,16 @@ public class Email {
     private String subject;
     private String text;
     private String filePath;
+    private int response;
 
     private Email(){
 
     }
-    private Email(String subject, String text, String filePath){
+    public Email(String subject, String text, String filePath, int response){
         this.subject= subject;
         this.text=text;
         this.filePath=filePath;
+        this.response=response;
     }
 
     public String getSubject() {
@@ -46,5 +48,12 @@ public class Email {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public int getResponse() {
+        return response;
+    }
+    public void setResponse(int response) {
+        this.response = response;
     }
 }

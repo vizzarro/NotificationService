@@ -61,11 +61,11 @@ public class ChannelController {
         channelRepository.save(channel);
         return "Updated";
     }
-    @PostMapping(path = "exist")
+    @GetMapping(path = "exist")
     public @ResponseBody boolean isChannel(@RequestParam int id){
         return channelRepository.existsById(id);
     }
-    @PostMapping(path = "size")
+    @GetMapping(path = "size")
     public @ResponseBody long sizeChannel(){
         return channelRepository.count();
     }
