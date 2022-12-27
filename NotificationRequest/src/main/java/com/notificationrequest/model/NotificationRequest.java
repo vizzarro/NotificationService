@@ -1,35 +1,33 @@
 package com.notificationrequest.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Entity
-@Table(name = "notificationRequest")
+@Table(name = "notification_request")
 public class NotificationRequest {
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String state;
     private String message;
     private String type;
-    private Date date;
-    private Time time;
+    private LocalDate date;
+    private LocalTime time;
     private String priority;
     private boolean multicast;
 
     public NotificationRequest(){
 
     }
-    public NotificationRequest(String state, String message, String type, Date date, Time time, String priority, Boolean multicast){
+    public NotificationRequest(String state, String message, String type, String priority, Boolean multicast){
         this.state = state;
         this.message= message;
         this.type = type;
-        this.date = date;
-        this.time = time;
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
         this.priority = priority;
         this.multicast = multicast;
     }
@@ -58,19 +56,19 @@ public class NotificationRequest {
         this.type = type;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -88,5 +86,13 @@ public class NotificationRequest {
 
     public void setMulticast(boolean multicast) {
         this.multicast = multicast;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
