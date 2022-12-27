@@ -81,12 +81,12 @@ public class RequestController {
         return "Updated";
     }
 
-    @PostMapping(path = "exist")
+    @GetMapping(path = "exist")
     public @ResponseBody boolean isRequest(@RequestParam int id){
        return requestRepository.existsById(id);
     }
 
-    @PostMapping(path = "size")
+    @GetMapping(path = "size")
     public @ResponseBody long sizeRequests(){
         return requestRepository.count();
     }

@@ -1,5 +1,6 @@
-package com.channel.model;
+package com.channel;
 
+import com.channel.model.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +60,14 @@ public class ChannelController {
         channel.setNumSub(numSub);
         channelRepository.save(channel);
         return "Updated";
+    }
+    @PostMapping(path = "exist")
+    public @ResponseBody boolean isChannel(@RequestParam int id){
+        return channelRepository.existsById(id);
+    }
+    @PostMapping(path = "size")
+    public @ResponseBody long sizeChannel(){
+        return channelRepository.count();
     }
 
 }
