@@ -80,4 +80,16 @@ public class RequestController {
         requestRepository.save(request);
         return "Updated";
     }
+
+    @PostMapping(path = "exist")
+    public @ResponseBody boolean isRequest(@RequestParam int id){
+       return requestRepository.existsById(id);
+    }
+
+    @PostMapping(path = "size")
+    public @ResponseBody long sizeRequests(){
+        return requestRepository.count();
+    }
+
+
 }
