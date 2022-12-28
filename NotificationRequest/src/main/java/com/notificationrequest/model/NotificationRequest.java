@@ -8,11 +8,27 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "notification_request")
 public class NotificationRequest {
+
+    enum State{
+        sended,
+        processed,
+        received
+    }
+    enum Type{
+        email,
+        sms,
+        push
+    }
+    enum Priority{
+        low,
+        medium,
+        high
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String state;
-    private String message;
+    private String message;// message source?
     private String type;
     private LocalDate date;
     private LocalTime time;
@@ -23,12 +39,12 @@ public class NotificationRequest {
 
     }
     public NotificationRequest(String state, String message, String type, String priority, Boolean multicast){
-        this.state = state;
+        this.state = State.valueOf(state).toString();
         this.message= message;
-        this.type = type;
+        this.type = Type.valueOf(type).toString();
         this.date = LocalDate.now();
         this.time = LocalTime.now();
-        this.priority = priority;
+        this.priority = Priority.valueOf(priority).toString();
         this.multicast = multicast;
     }
 
@@ -37,7 +53,7 @@ public class NotificationRequest {
     }
 
     public void setState(String state) {
-        this.state = state;
+        this.state = State.valueOf(state).toString();
     }
 
     public String getMessage() {
@@ -53,7 +69,7 @@ public class NotificationRequest {
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = Type.valueOf(type).toString();
     }
 
     public LocalDate getDate() {
@@ -77,7 +93,7 @@ public class NotificationRequest {
     }
 
     public void setPriority(String priority) {
-        this.priority = priority;
+        this.priority = Priority.valueOf(priority).toString();
     }
 
     public boolean isMulticast() {

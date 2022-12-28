@@ -48,4 +48,12 @@ public class Channel {
     public void setNumSub(int numSub) {
         this.numSub = numSub;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

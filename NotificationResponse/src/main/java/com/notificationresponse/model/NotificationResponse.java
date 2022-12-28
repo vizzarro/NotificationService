@@ -8,6 +8,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name= "notificationResponse")
 public  class NotificationResponse {
+    enum State{
+        sended,
+        processed,
+        received
+    }
+
     @Id
     @GeneratedValue
     private int id;
@@ -23,7 +29,7 @@ public  class NotificationResponse {
     public NotificationResponse(String action, String message, String state, int channel, int request){
         this.action = action;
         this.message = message;
-        this.state = state;
+        this.state = State.valueOf(state).toString();
         this.channel = channel;
         this.request = request;
     }
@@ -50,7 +56,7 @@ public  class NotificationResponse {
     }
 
     public void setState(String state) {
-        this.state = state;
+        this.state = State.valueOf(state).toString();
     }
 
     public int getChannel() {
