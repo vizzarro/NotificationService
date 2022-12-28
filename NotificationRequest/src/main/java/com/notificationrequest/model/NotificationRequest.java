@@ -1,29 +1,19 @@
 package com.notificationrequest.model;
 
+import com.notificationrequest.model.dto.Priority;
+import com.notificationrequest.model.dto.State;
+import com.notificationrequest.model.dto.Type;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "notification_request")
 public class NotificationRequest {
 
-    enum State{
-        sended,
-        processed,
-        received
-    }
-    enum Type{
-        email,
-        sms,
-        push
-    }
-    enum Priority{
-        low,
-        medium,
-        high
-    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -31,12 +21,14 @@ public class NotificationRequest {
     private String message;// message source?
     private String type;
     private LocalDate date;
+    private LocalDateTime updateDate;
     private LocalTime time;
     private String priority;
     private boolean multicast;
 
     public NotificationRequest(){
-
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
     }
     public NotificationRequest(String state, String message, String type, String priority, Boolean multicast){
         this.state = State.valueOf(state).toString();
@@ -44,6 +36,7 @@ public class NotificationRequest {
         this.type = Type.valueOf(type).toString();
         this.date = LocalDate.now();
         this.time = LocalTime.now();
+        this.updateDate = null;
         this.priority = Priority.valueOf(priority).toString();
         this.multicast = multicast;
     }
@@ -110,5 +103,13 @@ public class NotificationRequest {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDateTime getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(LocalDateTime updateDate) {
+        this.updateDate = updateDate;
     }
 }
