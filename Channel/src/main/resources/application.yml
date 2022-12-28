@@ -4,7 +4,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://localhost:5432/channel
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=channel
     username: postgres
     password: postgres
 server:

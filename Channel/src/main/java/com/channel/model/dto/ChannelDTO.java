@@ -1,26 +1,24 @@
-package com.channel.model;
+package com.channel.model.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "channel")
-public class Channel {
-    @Id
-    @GeneratedValue
+public class ChannelDTO {
     private int id;
     private String name;
     private String info;
     private int numSub;
+    public  ChannelDTO(){}
 
-    public  Channel(){}
-
-    public Channel(String name, String info, int numSub){
+    public ChannelDTO(String name, String info, int numSub){
         this.name=name;
         this.info=info;
         this.numSub=numSub;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -45,13 +43,5 @@ public class Channel {
 
     public void setNumSub(int numSub) {
         this.numSub = numSub;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }
