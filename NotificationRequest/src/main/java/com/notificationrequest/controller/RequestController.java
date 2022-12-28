@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/notificationrequest")
 public class RequestController {
-    @Autowired
+
     RequestServices requestServices;
+   @Autowired
+    public RequestController(RequestServices requestServices){
+        this.requestServices  =requestServices;
+    }
     @PostMapping
     public NotificationRequestDTO newRequest(@RequestBody NotificationRequestDTO r){
       return requestServices.save(r);

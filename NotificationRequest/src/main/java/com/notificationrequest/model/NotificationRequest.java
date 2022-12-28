@@ -15,7 +15,7 @@ public class NotificationRequest {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
     private String state;
     private String message;// message source?
