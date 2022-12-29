@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+import com.channel.services.*;
 
 @Service
 public class ChannelServices {
@@ -29,7 +31,7 @@ public class ChannelServices {
         return channelRepository.findAll().stream().map(e->modelMapper.map(e,ChannelDTO.class)).collect(Collectors.toList());
     }
     public ChannelDTO findById(int id){
-       Channel channel = channelRepository.findById(id).orElseThrow();
+       Channel channel = channelRepository.findById(id).orElseThrow(NoSuchElementException::new);
        return  modelMapper.map(channel, ChannelDTO.class);
     }
     public void delete(int id){
