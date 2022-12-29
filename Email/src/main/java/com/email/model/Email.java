@@ -56,4 +56,12 @@ public class Email {
     public void setResponse(int response) {
         this.response = response;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
