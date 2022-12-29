@@ -28,7 +28,7 @@ public class RequestServices {
         NotificationRequest request = modelMapper.map(r, NotificationRequest.class);
         request.setDate(LocalDate.now());
         request.setTime(LocalTime.now());
-        this.requestRepository.save(request);
+        requestRepository.save(request);
         return modelMapper.map(request, NotificationRequestDTO.class);
     }
 
@@ -37,9 +37,7 @@ public class RequestServices {
         return modelMapper.map(request, NotificationRequestDTO.class);
     }
     public void delete(int id) {requestRepository.deleteById(id);}
-    public long count(){
-        return requestRepository.count();
-    }
+    public long count(){return requestRepository.count();}
     public List<NotificationRequestDTO> findAll(){
         Function<NotificationRequest, NotificationRequestDTO> fMap = e->modelMapper.map(e,NotificationRequestDTO.class);
         return requestRepository.findAll().stream().map(fMap).collect(Collectors.toList());
