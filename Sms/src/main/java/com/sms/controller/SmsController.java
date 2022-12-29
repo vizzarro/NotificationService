@@ -15,6 +15,7 @@ import java.util.Optional;
 public class SmsController {
 
     SmsService smsService;
+    @Autowired
     public SmsController(SmsService smsService){this.smsService = smsService;}
     @PostMapping
     public SmsDTO newSms(@RequestBody SmsDTO s){return smsService.save(s);}
