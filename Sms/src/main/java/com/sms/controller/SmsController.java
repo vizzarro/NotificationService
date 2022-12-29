@@ -19,11 +19,11 @@ public class SmsController {
     @PostMapping
     public SmsDTO newSms(@RequestBody SmsDTO s){return smsService.save(s);}
     @GetMapping
-    public @ResponseBody List<SmsDTO> getAllSms(){
+    public List<SmsDTO> getAllSms(){
         return smsService.findAll();
     }
     @GetMapping(path = "{id}")
-    public @ResponseBody SmsDTO getSms(@PathVariable(value = "id") int id){
+    public SmsDTO getSms(@PathVariable(value = "id") int id){
         return smsService.findById(id);
     }
     @DeleteMapping(path = "{id}")
