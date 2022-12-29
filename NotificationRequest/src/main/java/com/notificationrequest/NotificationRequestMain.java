@@ -6,11 +6,14 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.notificationrequest.services.RestConsumer;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,7 +22,8 @@ import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
 public class NotificationRequestMain {
-    public static void main(String[] args) {SpringApplication.run(NotificationRequestMain.class, args);}
+    public static void main(String[] args) {SpringApplication.run(NotificationRequestMain.class, args);
+    new RestConsumer().getRequests();}
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
