@@ -4,11 +4,13 @@ import com.notificationrequest.model.NotificationRequest;
 import com.notificationrequest.model.dto.NotificationRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -31,12 +33,10 @@ public class RequestServices {
     }
 
     public NotificationRequestDTO findById(int id){
-        NotificationRequest request = requestRepository.findById(id).orElseThrow();
+        NotificationRequest request = requestRepository.findById(id).orElseThrow(/*NoSuchElementException::new*/);
         return modelMapper.map(request, NotificationRequestDTO.class);
     }
-    public void delete(int id){
-        requestRepository.deleteById(id);
-    }
+    public void delete(int id) {requestRepository.deleteById(id);}
     public long count(){
         return requestRepository.count();
     }

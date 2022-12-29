@@ -38,8 +38,9 @@ public class RequestController {
     }
 
     @PutMapping(path = "{id}") //qui d una variante è il patch(per oggetti complessi) dto
-    public NotificationRequestDTO update(@PathVariable(value = "id") int id,@RequestBody NotificationRequestDTO r){
-        return requestServices.save(r);
+    public NotificationRequestDTO update(@PathVariable(value = "id") long id,@RequestBody NotificationRequestDTO r){
+       r.setId(id);
+       return requestServices.save(r);
     }
     @PatchMapping(path = "{id}/{state}")
     public void updateState(@PathVariable(value = "id") int id, @PathVariable(value = "state") String state){
