@@ -1,29 +1,25 @@
-package com.pushnotification.model;
+package com.pushnotification.model.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name= "pushNotification")
-public class PushNotification {
-    @Id
-    @GeneratedValue
+public class PushNotificationDTO {
     private int id;
     private String topic;
     private String title;
     private String body;
     private int response;
-
-    public PushNotification(){
-
-    }
-    public PushNotification(String topic, String title, String body, int response){
+    public PushNotificationDTO(){}
+    public PushNotificationDTO(String topic, String title, String body, int response){
         this.topic = topic;
         this.title = title;
         this.body = body;
         this.response = response;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTopic() {
@@ -56,13 +52,5 @@ public class PushNotification {
 
     public void setResponse(int response) {
         this.response = response;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }
