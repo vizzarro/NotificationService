@@ -7,3 +7,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/notificationresponse
     username: postgres
     password: postgres
+
+server:
+  port: 8084
