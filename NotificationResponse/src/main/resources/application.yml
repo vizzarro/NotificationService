@@ -4,7 +4,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?notificationresponse
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=notificationresponse
     username: postgres
     password: postgres
 

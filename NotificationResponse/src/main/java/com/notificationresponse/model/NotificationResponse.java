@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import com.notificationresponse.model.dto.State;
 
 @Entity
-@Table(name= "notificationResponse")
+@Table(name= "response_notification")
 public  class NotificationResponse {
 
     @Id
@@ -69,5 +69,13 @@ public  class NotificationResponse {
 
     public void setRequest(int request) {
         this.request = request;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -16,6 +16,11 @@ import java.util.Optional;
 public class PushNotificationController {
 
    PushNotificationServices pushNotificationServices;
+
+   @Autowired
+   public PushNotificationController(PushNotificationServices pushNotificationServices){
+       this.pushNotificationServices = pushNotificationServices;
+   }
     @PostMapping
     public PushNotificationDTO newPushNotification(@RequestBody PushNotificationDTO p){return pushNotificationServices.save(p); }
     @GetMapping
