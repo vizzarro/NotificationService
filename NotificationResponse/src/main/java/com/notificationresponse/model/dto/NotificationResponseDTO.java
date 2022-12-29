@@ -1,35 +1,30 @@
-package com.notificationresponse.model;
+package com.notificationresponse.model.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import com.notificationresponse.model.dto.State;
-
-@Entity
-@Table(name= "notificationResponse")
-public  class NotificationResponse {
-
-    @Id
-    @GeneratedValue
+public class NotificationResponseDTO {
     private int id;
     private String action;
     private String message;
-    private String state;
+    private State state;
     private int channel;
     private int request;
-
-    public NotificationResponse(){
+    public NotificationResponseDTO(){
 
     }
-    public NotificationResponse(String action, String message, String state, int channel, int request){
+    public NotificationResponseDTO(String action, String message, String state, int channel, int request){
         this.action = action;
         this.message = message;
-        this.state = State.valueOf(state).toString();
+        this.state = State.valueOf(state);
         this.channel = channel;
         this.request = request;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getAction() {
         return action;
@@ -47,12 +42,12 @@ public  class NotificationResponse {
         this.message = message;
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(String state) {
-        this.state = State.valueOf(state).toString();
+    public void setState(State state) {
+        this.state = state;
     }
 
     public int getChannel() {
