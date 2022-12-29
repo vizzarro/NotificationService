@@ -32,9 +32,9 @@ public class ChannelController {
     @PutMapping(path = "{id}")
     public ChannelDTO update(@PathVariable(value = "id") int id,@RequestBody ChannelDTO c){
         c.setId(id);
-      return channelServices.save(c);
+        return channelServices.save(c);
     }
-    @PostMapping(path = "{id}/{name}")
+    @PatchMapping (path = "{id}/{name}")
     public void updateName(@PathVariable(value = "id") int id, @PathVariable(value = "name") String name){
         ChannelDTO dto  = channelServices.findById(id);
         dto.setName(name);
