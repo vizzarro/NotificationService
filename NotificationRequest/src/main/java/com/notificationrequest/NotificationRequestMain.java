@@ -22,8 +22,7 @@ import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
 public class NotificationRequestMain {
-    public static void main(String[] args) {SpringApplication.run(NotificationRequestMain.class, args);
-    new RestConsumer().getRequests();}
+    public static void main(String[] args) {SpringApplication.run(NotificationRequestMain.class, args);}
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import com.notificationresponse.model.dto.State;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name= "response_notification")
@@ -14,6 +15,7 @@ public  class NotificationResponse {
     @GeneratedValue
     private int id;
     private String action;
+    @NotEmpty(message = "the message field is required")
     private String message;
     private String state;
     private int channel;

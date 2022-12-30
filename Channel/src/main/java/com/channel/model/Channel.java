@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "channel")
@@ -11,6 +12,7 @@ public class Channel {
     @Id
     @GeneratedValue
     private int id;
+    @NotEmpty(message = "the channel name is required")
     private String name;
     private String info;
     private int numSub;

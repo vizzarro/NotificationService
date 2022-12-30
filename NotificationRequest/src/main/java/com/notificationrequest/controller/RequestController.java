@@ -5,6 +5,7 @@ import com.notificationrequest.model.dto.NotificationRequestResponse;
 import com.notificationrequest.model.dto.Priority;
 import com.notificationrequest.model.dto.State;
 import com.notificationrequest.services.RequestServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class RequestController {
         this.requestServices  =requestServices;
     }
     @PostMapping
-    public NotificationRequestDTO newRequest(@RequestBody NotificationRequestDTO r){
+    public NotificationRequestDTO newRequest(@Valid @RequestBody NotificationRequestDTO r){
       return requestServices.save(r);
     }
     @GetMapping

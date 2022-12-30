@@ -4,6 +4,8 @@ import com.notificationrequest.model.dto.Priority;
 import com.notificationrequest.model.dto.State;
 import com.notificationrequest.model.dto.Type;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,12 +19,16 @@ public class NotificationRequest {
     @Id
     @GeneratedValue
     private Long id;
+
     private String state;
+    @NotEmpty(message = "message field is required")
     private String message;// message source?
+    @NotEmpty(message = "type field is required")
     private String type;
     private LocalDate date;
     private LocalDateTime updateDate;
     private LocalTime time;
+
     private String priority;
     private boolean multicast;
 

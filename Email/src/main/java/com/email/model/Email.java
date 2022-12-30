@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name= "email1_table")
@@ -12,6 +13,7 @@ public class Email {
     @GeneratedValue
     private int id;
     private String subject;
+    @NotEmpty(message = "the mail body is required")
     private String text;
     private String filePath;
     private int response;
