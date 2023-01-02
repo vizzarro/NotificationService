@@ -17,6 +17,7 @@ public class RedisConsumer implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
         System.out.println("Message: "+ message.toString());
+
         messageConsumer.add(message.toString());
     }
 }

@@ -5,15 +5,17 @@ public class NotificationResponseDTO {
     private String action;
     private String message;
     private State state;
+    private Type type;
     private int channel;
     private int request;
     public NotificationResponseDTO(){
 
     }
-    public NotificationResponseDTO(String action, String message, String state, int channel, int request){
+    public NotificationResponseDTO(String action, String message, String state, String type,int channel, int request){
         this.action = action;
         this.message = message;
         this.state = State.valueOf(state);
+        this.type = Type.valueOf(type);
         this.channel = channel;
         this.request = request;
     }
@@ -64,5 +66,13 @@ public class NotificationResponseDTO {
 
     public void setRequest(int request) {
         this.request = request;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }

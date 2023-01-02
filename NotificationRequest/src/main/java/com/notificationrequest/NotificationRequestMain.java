@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.notificationrequest.configuration.RedisConfiguration;
 import com.notificationrequest.services.RedisConsumer;
 import com.notificationrequest.services.RestConsumer;
 import org.modelmapper.ModelMapper;
@@ -32,7 +33,7 @@ import java.time.format.DateTimeFormatter;
 public class NotificationRequestMain {
     public static void main(String[] args) {
         SpringApplication.run(NotificationRequestMain.class, args);
-        RedisConsumer redisConsumer = new RedisConsumer();
+
     }
     @Bean
     public ModelMapper modelMapper() {

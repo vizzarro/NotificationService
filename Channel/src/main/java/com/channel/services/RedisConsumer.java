@@ -19,6 +19,7 @@ public class RedisConsumer implements MessageListener {
         this.topic =topic;
     }
     public final List<String> messageConsumer = new ArrayList<String>();
+    public final List<String> topics = new ArrayList<String>();
     @Override
     public void onMessage(Message message, byte[] pattern) {
         System.out.println("Message: "+ message.toString());

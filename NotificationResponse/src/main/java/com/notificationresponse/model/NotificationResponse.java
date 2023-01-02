@@ -1,5 +1,6 @@
 package com.notificationresponse.model;
 
+import com.notificationresponse.model.dto.Type;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,16 +19,18 @@ public  class NotificationResponse {
     @NotEmpty(message = "the message field is required")
     private String message;
     private String state;
+    private String type;
     private int channel;
     private int request;
 
     public NotificationResponse(){
 
     }
-    public NotificationResponse(String action, String message, String state, int channel, int request){
+    public NotificationResponse(String action, String message, String state,String type, int channel, int request){
         this.action = action;
         this.message = message;
         this.state = State.valueOf(state).toString();
+        this.type = Type.valueOf(type).toString();
         this.channel = channel;
         this.request = request;
     }
@@ -79,5 +82,13 @@ public  class NotificationResponse {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -14,12 +14,12 @@ import com.channel.services.*;
 @Service
 public class ChannelServices {
 
-    private ChannelRepository channelRepository;
-    private ModelMapper modelMapper;
+    private final ChannelRepository channelRepository;
+    private final ModelMapper modelMapper;
 
-   @Autowired
+    @Autowired
     public ChannelServices(ChannelRepository channelRepository, ModelMapper modelMapper){
-        this.channelRepository  =channelRepository;
+        this.channelRepository  = channelRepository;
         this.modelMapper = modelMapper;
     }
     public ChannelDTO save(ChannelDTO c){
