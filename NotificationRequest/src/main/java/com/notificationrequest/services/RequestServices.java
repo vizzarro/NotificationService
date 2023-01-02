@@ -5,6 +5,8 @@ import com.notificationrequest.model.dto.NotificationRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,15 +18,27 @@ import java.util.stream.Collectors;
 
 @Service
 public class RequestServices {
-    private RequestRepository requestRepository;
-    private ModelMapper modelMapper;
+    private final RequestRepository requestRepository;
+    private final ModelMapper modelMapper;
+    RedisTemplate template;
+    ChannelTopic topic;
     @Autowired
-   public RequestServices(RequestRepository requestRepository,ModelMapper modelMapper){
+   public RequestServices(RequestRepository requestRepository,ModelMapper modelMapper, RedisTemplate template, ChannelTopic topic){
         this.requestRepository = requestRepository;
         this.modelMapper  = modelMapper;
+        this.template = template;
+        this.topic = topic;
     }
 
     public NotificationRequestDTO save(NotificationRequestDTO r){
+        NotificationRequest request = modelMapper.map(r, NotificationRequest.class);
+        request.setDate(LocalDate.now());
+        request.setTime(LocalTime.now());
+        requestRepository.save(request);
+        template.convertAndSend(topic.getTopic(), request.getId()+"");
+        return modelMapper.map(request, NotificationRequestDTO.class);
+    }
+    public NotificationRequestDTO update(NotificationRequestDTO r){
         NotificationRequest request = modelMapper.map(r, NotificationRequest.class);
         request.setDate(LocalDate.now());
         request.setTime(LocalTime.now());

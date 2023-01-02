@@ -6,12 +6,20 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.notificationrequest.services.RedisConsumer;
 import com.notificationrequest.services.RestConsumer;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.PatternTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+import org.springframework.data.redis.connection.jedis.JedisConnection;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,7 +30,10 @@ import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
 public class NotificationRequestMain {
-    public static void main(String[] args) {SpringApplication.run(NotificationRequestMain.class, args);}
+    public static void main(String[] args) {
+        SpringApplication.run(NotificationRequestMain.class, args);
+        RedisConsumer redisConsumer = new RedisConsumer();
+    }
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
@@ -44,5 +55,6 @@ public class NotificationRequestMain {
         mapper.registerModule(simpleModule);
         return mapper;
     }
+
 
 }

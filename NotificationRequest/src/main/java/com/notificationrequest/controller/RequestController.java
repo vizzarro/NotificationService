@@ -7,6 +7,8 @@ import com.notificationrequest.model.dto.State;
 import com.notificationrequest.services.RequestServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,13 +16,15 @@ import org.springframework.web.bind.annotation.*;
 public class RequestController {
 
     RequestServices requestServices;
+
    @Autowired
     public RequestController(RequestServices requestServices){
         this.requestServices  =requestServices;
+
     }
     @PostMapping
     public NotificationRequestDTO newRequest(@Valid @RequestBody NotificationRequestDTO r){
-      return requestServices.save(r);
+       return requestServices.save(r);
     }
     @GetMapping
     public NotificationRequestResponse getAllNotifications(){
@@ -41,19 +45,19 @@ public class RequestController {
     @PutMapping(path = "{id}") //qui d una variante è il patch(per oggetti complessi) dto
     public NotificationRequestDTO update(@PathVariable(value = "id") long id,@RequestBody NotificationRequestDTO r){
        r.setId(id);
-       return requestServices.save(r);
+       return requestServices.update(r);
     }
     @PatchMapping(path = "{id}/{state}")
     public void updateState(@PathVariable(value = "id") int id, @PathVariable(value = "state") String state){
         NotificationRequestDTO dto = requestServices.findById(id);
         dto.setState(State.valueOf(state));
-        requestServices.save(dto);
+        requestServices.update(dto);
     }
-    @PostMapping(path = "{id}/{priority}")
+    @PatchMapping(path = "{id}/{priority}")
     public  void updatePriority(@PathVariable(value = "id") int id, @PathVariable(value = "priority") String priority){
         NotificationRequestDTO dto = requestServices.findById(id);
         dto.setPriority(Priority.valueOf(priority));
-        requestServices.save(dto);
+        requestServices.update(dto);
     }
     @GetMapping(path = "count")
     public  long countRequests(){
