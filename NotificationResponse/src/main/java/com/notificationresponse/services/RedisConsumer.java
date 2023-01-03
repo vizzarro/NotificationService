@@ -15,8 +15,8 @@ import java.util.List;
 
 public class RedisConsumer implements MessageListener {
     public final List<String> messageConsumer = new ArrayList<String>();
-    private RestConsumer restConsumer;
-    private NotificationResponseParser responseParser;
+    private final RestConsumer restConsumer;
+    private final NotificationResponseParser responseParser;
     @Autowired
     public RedisConsumer(RestConsumer restConsumer, NotificationResponseParser responseParser){
         this.restConsumer = restConsumer;

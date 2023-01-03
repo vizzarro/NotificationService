@@ -39,6 +39,12 @@ public class NotificationResponseController {
         response.setAction(Action.valueOf(action));
         notificationResponseServices.save(response);
     }
+    @PostMapping(path = "{id}/{message}")
+    public void updateMessage(@PathVariable(value = "id") int id, @PathVariable(value = "message")String message){
+        NotificationResponseDTO response  = notificationResponseServices.findById(id);
+        response.setMessage(message);
+        notificationResponseServices.save(response);
+    }
     @PatchMapping(path = "{id}/{state}")
     public void updateState(@PathVariable(value = "id") int id, @PathVariable(value = "state")String state){
         NotificationResponseDTO response  = notificationResponseServices.findById(id);
