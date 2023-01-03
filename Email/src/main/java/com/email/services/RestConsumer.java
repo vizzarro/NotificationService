@@ -5,9 +5,10 @@ import com.email.model.Email;
 import com.email.model.dto.NotificationResponseDTO;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
+@Service
 public class RestConsumer {
     public NotificationResponseDTO getResponse(int id) {
         RestTemplate restTemplate = new RestTemplate();

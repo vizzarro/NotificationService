@@ -23,9 +23,7 @@ public class RedisConsumer implements MessageListener {
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
-
         NotificationResponseDTO responseDTO = restConsumer.getResponse(Integer.parseInt(message.toString()));
-        //todo: dare l'id del canale dal nome tramite restTemplate
         String dto = restConsumer.createEmail("no reply",responseDTO.getMessage(), null,responseDTO.getId());
         try {
             EmailDTO emailDTO = new ObjectMapper().readValue(dto,EmailDTO.class);
