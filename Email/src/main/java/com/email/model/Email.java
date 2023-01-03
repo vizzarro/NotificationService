@@ -16,6 +16,7 @@ public class Email {
     @NotEmpty(message = "the mail body is required")
     private String text;
     private String filePath;
+    @NotEmpty(message = "the response reference must not be empty")
     private int response;
 
     private Email(){

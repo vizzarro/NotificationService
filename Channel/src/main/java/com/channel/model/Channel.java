@@ -15,7 +15,7 @@ public class Channel {
     @NotEmpty(message = "the channel name is required")
     private String name;
     private String info;
-    private int numSub;
+    private int numSub; //da eliminare?
 
     public  Channel(){}
 

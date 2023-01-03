@@ -26,12 +26,14 @@ public class NotificationRequest {
     private String message;// message source?
     @NotEmpty(message = "type field is required")
     private String type;
-    private String action;
+    @NotEmpty(message = "action field is required")
+    private String action;//vedere se esiste il default o metterlo tramite sql
     private LocalDate date;
     private LocalDateTime updateDate;
     private LocalTime time;
-
+    @NotEmpty(message = "priority field is required")
     private String priority;
+    @NotEmpty(message = "multicast field is required")
     private boolean multicast;
 
     public NotificationRequest(){

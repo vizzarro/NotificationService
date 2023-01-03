@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import com.notificationresponse.model.dto.State;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name= "response_notification")
@@ -16,12 +17,17 @@ public  class NotificationResponse {
     @Id
     @GeneratedValue
     private int id;
+    @NotEmpty(message = "the action field is required")
     private String action;
     @NotEmpty(message = "the message field is required")
     private String message;
+    @NotEmpty(message = "the message field is required")
     private String state;
+    @NotEmpty(message = "the message field is required")
     private String type;
+    @NotNull(message = "the channel reference must not be null ")
     private int channel;
+    @NotNull(message = "the request reference must not be null")
     private int request;
 
     public NotificationResponse(){

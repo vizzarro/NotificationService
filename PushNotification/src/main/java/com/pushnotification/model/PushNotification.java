@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name= "pushNotification")
@@ -11,9 +13,13 @@ public class PushNotification {
     @Id
     @GeneratedValue
     private int id;
+    @NotEmpty(message = "the topic field is required")
     private String topic;
+    @NotEmpty(message = "the title field is required")
     private String title;
+    @NotEmpty(message = "the body field is required")
     private String body;
+    @NotNull(message = "the response reference must not be null")
     private int response;
 
     public PushNotification(){
