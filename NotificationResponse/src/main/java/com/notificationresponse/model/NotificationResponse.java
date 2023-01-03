@@ -1,5 +1,6 @@
 package com.notificationresponse.model;
 
+import com.notificationresponse.model.dto.Action;
 import com.notificationresponse.model.dto.Type;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public  class NotificationResponse {
 
     }
     public NotificationResponse(String action, String message, String state,String type, int channel, int request){
-        this.action = action;
+        this.action = Action.valueOf(action).toString();
         this.message = message;
         this.state = State.valueOf(state).toString();
         this.type = Type.valueOf(type).toString();

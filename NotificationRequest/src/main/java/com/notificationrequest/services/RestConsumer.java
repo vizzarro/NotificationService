@@ -15,12 +15,5 @@ public class RestConsumer {
         ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:8080/notificationrequest", String.class);
         System.out.println(response.getBody());
     }
-    public void createNotification() {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<NotificationRequest> request = new HttpEntity<>(
-                new NotificationRequest("sended", "my message", "sms", "low", false)
-        );
-        String productCreateResponse = restTemplate.postForObject("http://localhost:8080/notificationrequest", request, String.class);
-        System.out.println(productCreateResponse);
-    }
+
 }

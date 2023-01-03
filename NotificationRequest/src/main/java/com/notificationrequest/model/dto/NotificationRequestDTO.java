@@ -19,6 +19,7 @@ public class NotificationRequestDTO {
     private State state;
     private String message;// message source?
     private Type type;
+    private Action action;
 
     private LocalDate date;
 
@@ -30,10 +31,11 @@ public class NotificationRequestDTO {
 
     public NotificationRequestDTO(){}
 
-    public NotificationRequestDTO(String state, String message, String type, String priority, Boolean multicast){
+    public NotificationRequestDTO(String state, String message, String type, String action, String priority, Boolean multicast){
         this.state = State.valueOf(state);
         this.message= message;
         this.type = Type.valueOf(type);
+        this.action = Action.valueOf(action);
         this.date = LocalDate.now();
         this.time = LocalTime.now();
         this.updateDate = null;
@@ -118,5 +120,13 @@ public class NotificationRequestDTO {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
 }

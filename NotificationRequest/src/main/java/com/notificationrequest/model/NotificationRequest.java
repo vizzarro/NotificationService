@@ -1,5 +1,6 @@
 package com.notificationrequest.model;
 
+import com.notificationrequest.model.dto.Action;
 import com.notificationrequest.model.dto.Priority;
 import com.notificationrequest.model.dto.State;
 import com.notificationrequest.model.dto.Type;
@@ -25,6 +26,7 @@ public class NotificationRequest {
     private String message;// message source?
     @NotEmpty(message = "type field is required")
     private String type;
+    private String action;
     private LocalDate date;
     private LocalDateTime updateDate;
     private LocalTime time;
@@ -36,10 +38,11 @@ public class NotificationRequest {
         this.date = LocalDate.now();
         this.time = LocalTime.now();
     }
-    public NotificationRequest(String state, String message, String type, String priority, Boolean multicast){
+    public NotificationRequest(String state, String message, String type, String action,String priority, Boolean multicast){
         this.state = State.valueOf(state).toString();
         this.message= message;
         this.type = Type.valueOf(type).toString();
+        this.action= Action.valueOf(action).toString();
         this.date = LocalDate.now();
         this.time = LocalTime.now();
         this.updateDate = null;
@@ -117,5 +120,13 @@ public class NotificationRequest {
 
     public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }

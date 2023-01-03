@@ -14,12 +14,13 @@ public class RestConsumer {
         ResponseEntity<NotificationRequestDTO> response = restTemplate.getForEntity("http://localhost:8080/notificationrequest/"+id, NotificationRequestDTO.class);
         return response.getBody();
     }
-    public void createNotificationResponse(String action, String message, String state, String type, int channel, int req) {
+    public String createNotificationResponse(String action, String message, String state, String type, int channel, int req) {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<NotificationResponse> request = new HttpEntity<>(
                 new NotificationResponse(action, message, state, type, channel, req)
         );
         String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse", request, String.class);
         System.out.println(productCreateResponse);
+        return productCreateResponse;
     }
 }

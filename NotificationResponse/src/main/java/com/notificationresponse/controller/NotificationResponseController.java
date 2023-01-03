@@ -1,6 +1,7 @@
 package com.notificationresponse.controller;
 
 import com.notificationresponse.model.NotificationResponse;
+import com.notificationresponse.model.dto.Action;
 import com.notificationresponse.model.dto.NotificationResponseDTO;
 import com.notificationresponse.model.dto.State;
 import com.notificationresponse.services.NotificationResponseServices;
@@ -35,7 +36,7 @@ public class NotificationResponseController {
     @PatchMapping(path = "{id}/{action}")
     public void updateAction(@PathVariable(value = "id") int id, @PathVariable(value = "action")String action){
         NotificationResponseDTO response  = notificationResponseServices.findById(id);
-        response.setAction(action);
+        response.setAction(Action.valueOf(action));
         notificationResponseServices.save(response);
     }
     @PatchMapping(path = "{id}/{state}")

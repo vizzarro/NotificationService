@@ -1,18 +1,21 @@
 package com.notificationresponse.model.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class NotificationResponseDTO {
     private int id;
-    private String action;
+    private Action action;
     private String message;
     private State state;
     private Type type;
     private int channel;
+    @NotEmpty(message = "the request reference must not be empty")
     private int request;
     public NotificationResponseDTO(){
 
     }
     public NotificationResponseDTO(String action, String message, String state, String type,int channel, int request){
-        this.action = action;
+        this.action = Action.valueOf(action);
         this.message = message;
         this.state = State.valueOf(state);
         this.type = Type.valueOf(type);
@@ -28,11 +31,11 @@ public class NotificationResponseDTO {
         this.id = id;
     }
 
-    public String getAction() {
+    public Action getAction() {
         return action;
     }
 
-    public void setAction(String action) {
+    public void setAction(Action action) {
         this.action = action;
     }
 
