@@ -1,5 +1,6 @@
 package com.email.configuration;
 
+import com.email.services.EmailParser;
 import com.email.services.RedisConsumer;
 import com.email.services.RestConsumer;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +15,7 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 public class RedisConfiguration {
     @Bean
     MessageListenerAdapter messageListener() {
-        return new MessageListenerAdapter(new RedisConsumer(new RestConsumer()));
+        return new MessageListenerAdapter(new RedisConsumer(new RestConsumer(), new EmailParser(new RestConsumer())));
     }
     @Bean
     ChannelTopic topic() {

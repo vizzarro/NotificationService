@@ -5,6 +5,7 @@ import com.notificationresponse.model.dto.Action;
 import com.notificationresponse.model.dto.NotificationResponseDTO;
 import com.notificationresponse.model.dto.State;
 import com.notificationresponse.services.NotificationResponseServices;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class NotificationResponseController {
     public NotificationResponseDTO getResponse(@PathVariable(value = "id") int id){return notificationResponseServices.findById(id);}
     @DeleteMapping(path = "{id}")
     public void deleteResponse(@PathVariable(value = "id") int id) {notificationResponseServices.delete(id);}
-    @PutMapping(path = "{id}")
+    @PostMapping(path = "{id}")
     public NotificationResponseDTO update(@PathVariable(value = "id")  int id,@RequestBody NotificationResponseDTO n){
         n.setId(id);
         return notificationResponseServices.save(n);
@@ -37,12 +38,6 @@ public class NotificationResponseController {
     public void updateAction(@PathVariable(value = "id") int id, @PathVariable(value = "action")String action){
         NotificationResponseDTO response  = notificationResponseServices.findById(id);
         response.setAction(Action.valueOf(action));
-        notificationResponseServices.save(response);
-    }
-    @PostMapping(path = "{id}/{message}")
-    public void updateMessage(@PathVariable(value = "id") int id, @PathVariable(value = "message")String message){
-        NotificationResponseDTO response  = notificationResponseServices.findById(id);
-        response.setMessage(message);
         notificationResponseServices.save(response);
     }
     @PatchMapping(path = "{id}/{state}")
@@ -59,7 +54,7 @@ public class NotificationResponseController {
 
     }
 
-    @GetMapping(path = "count")
+    @GetMapping(path = "/count")
     public @ResponseBody long countResponse(){
         return notificationResponseServices.count();
     }

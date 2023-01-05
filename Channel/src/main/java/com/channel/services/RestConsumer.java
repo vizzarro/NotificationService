@@ -15,7 +15,7 @@ public class RestConsumer {
     public void createChannel(String name, String info) {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<Channel> request = new HttpEntity<>(
-                new Channel(name,info,0)
+                new Channel(name,info)
         );
         String productCreateResponse = restTemplate.postForObject("http://localhost:8081/channel", request, String.class);
         System.out.println(productCreateResponse);

@@ -19,7 +19,7 @@ public class RedisConfiguration {
     @Bean
     ChannelTopic topic() {
         return new ChannelTopic("sms");
-    }
+    } //da mettere su configurazione .yml
     @Bean
     RedisMessageListenerContainer redisContainer(RedisConnectionFactory connectionFactory) {
         RedisMessageListenerContainer container

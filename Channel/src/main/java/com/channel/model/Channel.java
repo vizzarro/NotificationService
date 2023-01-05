@@ -15,14 +15,13 @@ public class Channel {
     @NotEmpty(message = "the channel name is required")
     private String name;
     private String info;
-    private int numSub; //da eliminare?
+
 
     public  Channel(){}
 
-    public Channel(String name, String info, int numSub){
+    public Channel(String name, String info){
         this.name=name;
         this.info=info;
-        this.numSub=numSub;
     }
 
     public String getName() {
@@ -39,14 +38,6 @@ public class Channel {
 
     public void setInfo(String info) {
         this.info = info;
-    }
-
-    public int getNumSub() {
-        return numSub;
-    }
-
-    public void setNumSub(int numSub) {
-        this.numSub = numSub;
     }
 
     public int getId() {

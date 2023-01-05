@@ -2,7 +2,10 @@ package com.notificationresponse.services;
 
 
 import com.notificationresponse.model.NotificationResponse;
+import com.notificationresponse.model.dto.Action;
 import com.notificationresponse.model.dto.NotificationRequestDTO;
+import com.notificationresponse.model.dto.NotificationResponseDTO;
+import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,22 +19,22 @@ public class RestConsumer {
         return response.getBody();
     }
 
-    public String createNotificationResponse(String action, String message, String state, String type, int channel, int req) {
+    public String createNotificationResponse(String action, String message, String state, String type,String actionField, int channel, int req) {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<NotificationResponse> request = new HttpEntity<>(
-                new NotificationResponse(action, message, state, type, channel, req)
+                new NotificationResponse(action, message, state, type,actionField, channel, req)
         );
         String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse", request, String.class);
         System.out.println(productCreateResponse);
         return productCreateResponse;
     }
 
-    public void updateMessage(String message, int id){
+    public void update(NotificationResponseDTO dto){
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<NotificationResponse> request = new HttpEntity<>(
-                new NotificationResponse()
+        HttpEntity<NotificationResponseDTO> request = new HttpEntity<>(
+                new NotificationResponseDTO(dto.getAction().toString(), dto.getMessage(),dto.getState().toString(),dto.getType().toString(),dto.getChangeField(),dto.getChannel(),dto.getRequest())
         );
-        String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse/"+id+"/"+message, request, String.class);
+        String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse/"+dto.getId(), request, String.class);
 
     }
 

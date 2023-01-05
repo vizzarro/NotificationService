@@ -35,6 +35,7 @@ public class RequestServices {
         request.setDate(LocalDate.now());
         request.setTime(LocalTime.now());
         requestRepository.save(request);
+        //qui ci va un try catch
         template.convertAndSend(topic.getTopic(), request.getId()+"");
         return modelMapper.map(request, NotificationRequestDTO.class);
     }

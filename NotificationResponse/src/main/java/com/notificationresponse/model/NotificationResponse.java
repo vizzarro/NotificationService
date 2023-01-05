@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import com.notificationresponse.model.dto.State;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.json.JSONObject;
 
 @Entity
 @Table(name= "response_notification")
@@ -21,10 +22,12 @@ public  class NotificationResponse {
     private String action;
     @NotEmpty(message = "the message field is required")
     private String message;
+
     @NotEmpty(message = "the message field is required")
     private String state;
     @NotEmpty(message = "the message field is required")
     private String type;
+    private String changeField;
     @NotNull(message = "the channel reference must not be null ")
     private int channel;
     @NotNull(message = "the request reference must not be null")
@@ -33,11 +36,12 @@ public  class NotificationResponse {
     public NotificationResponse(){
 
     }
-    public NotificationResponse(String action, String message, String state,String type, int channel, int request){
-        this.action = Action.valueOf(action).toString();
+    public NotificationResponse(String action, String message, String state,String type,String changeField, int channel, int request){
+        this.action = action;
         this.message = message;
         this.state = State.valueOf(state).toString();
         this.type = Type.valueOf(type).toString();
+        this.changeField  = changeField;
         this.channel = channel;
         this.request = request;
     }
@@ -64,7 +68,7 @@ public  class NotificationResponse {
     }
 
     public void setState(String state) {
-        this.state = State.valueOf(state).toString();
+        this.state = state;
     }
 
     public int getChannel() {
@@ -97,5 +101,13 @@ public  class NotificationResponse {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getChangeField() {
+        return changeField;
+    }
+
+    public void setChangeField(String changeField) {
+        this.changeField = changeField;
     }
 }

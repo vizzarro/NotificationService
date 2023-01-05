@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpbDataSourceConfig">
+    <data-sources>
+      <data-source id="b75bbb1f-0e35-40a8-a04e-8aad1b6d41a7" name="NotificationService" url="jdbc:postgresql://localhost/NotificationService" driverClass="org.postgresql.Driver" />
+    </data-sources>
+  </component>
+</project>

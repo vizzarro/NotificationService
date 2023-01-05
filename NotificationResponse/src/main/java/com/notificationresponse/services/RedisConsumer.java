@@ -25,10 +25,10 @@ public class RedisConsumer implements MessageListener {
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
-        System.out.println(message.toString());
+        System.out.println(message.toString());//qui da mettere il log
         NotificationRequestDTO requestDTO = restConsumer.getRequest(Integer.parseInt(message.toString()));
         //todo: dare l'id del canale dal nome tramite restTemplate
-        String dto = restConsumer.createNotificationResponse(requestDTO.getAction().toString(),requestDTO.getMessage(), State.sended.toString(),requestDTO.getType().toString(),1,Integer.parseInt(requestDTO.getId().toString()));
+        String dto = restConsumer.createNotificationResponse(requestDTO.getAction().toString(),requestDTO.getMessage(), State.sended.toString(),requestDTO.getType().toString(),"",1,Integer.parseInt(requestDTO.getId().toString()));
         try {
             NotificationResponseDTO responseDTO = new ObjectMapper().readValue(dto,NotificationResponseDTO.class);
             responseParser.parseResponse(responseDTO);
