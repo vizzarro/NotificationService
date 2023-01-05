@@ -20,14 +20,16 @@ import java.util.stream.Collectors;
 public class RequestServices {
     private final RequestRepository requestRepository;
     private final ModelMapper modelMapper;
-    RedisTemplate template;
+    private final RedisTemplate template;
+    private RestConsumer restConsumer;
     ChannelTopic topic;
     @Autowired
-   public RequestServices(RequestRepository requestRepository,ModelMapper modelMapper, RedisTemplate template, ChannelTopic topic){
+   public RequestServices(RequestRepository requestRepository,ModelMapper modelMapper, RedisTemplate template, ChannelTopic topic, RestConsumer restConsumer){
         this.requestRepository = requestRepository;
         this.modelMapper  = modelMapper;
         this.template = template;
         this.topic = topic;
+        this.restConsumer = restConsumer;
     }
 
     public NotificationRequestDTO save(NotificationRequestDTO r){
@@ -56,6 +58,9 @@ public class RequestServices {
     public List<NotificationRequestDTO> findAll(){
         Function<NotificationRequest, NotificationRequestDTO> fMap = e->modelMapper.map(e,NotificationRequestDTO.class);
         return requestRepository.findAll().stream().map(fMap).collect(Collectors.toList());
+    }
+    public String getChannels(){
+        return restConsumer.getAllChannels();
     }
 
 }

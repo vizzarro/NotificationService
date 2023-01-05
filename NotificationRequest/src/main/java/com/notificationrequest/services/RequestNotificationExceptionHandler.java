@@ -43,4 +43,12 @@ public class RequestNotificationExceptionHandler extends ResponseEntityException
         return handleExceptionInternal(ex, errorMessages.toString(),
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+    @ExceptionHandler(RuntimeException.class)
+    protected ResponseEntity<Object> handleRuntime(
+            RuntimeException ex, WebRequest request) {
+        ConstraintViolationException exception;
+        String errorMessages = ex.getMessage();
+        return handleExceptionInternal(ex, errorMessages,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 }

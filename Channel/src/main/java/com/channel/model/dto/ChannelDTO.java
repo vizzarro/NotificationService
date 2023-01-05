@@ -4,13 +4,12 @@ public class ChannelDTO {
     private int id;
     private String name;
     private String info;
-    private int numSub;
+
     public  ChannelDTO(){}
 
-    public ChannelDTO(String name, String info, int numSub){
+    public ChannelDTO(String name, String info){
         this.name=name;
         this.info=info;
-        this.numSub=numSub;
     }
 
     public int getId() {
@@ -37,11 +36,5 @@ public class ChannelDTO {
         this.info = info;
     }
 
-    public int getNumSub() {
-        return numSub;
-    }
 
-    public void setNumSub(int numSub) {
-        this.numSub = numSub;
-    }
 }

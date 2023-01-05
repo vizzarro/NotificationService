@@ -14,6 +14,7 @@ public class RestConsumer {
     }
     public void createChannel(String name, String info) {
         RestTemplate restTemplate = new RestTemplate();
+
         HttpEntity<Channel> request = new HttpEntity<>(
                 new Channel(name,info)
         );

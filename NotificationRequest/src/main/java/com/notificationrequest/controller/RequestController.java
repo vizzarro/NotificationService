@@ -5,6 +5,7 @@ import com.notificationrequest.model.dto.NotificationRequestResponse;
 import com.notificationrequest.model.dto.Priority;
 import com.notificationrequest.model.dto.State;
 import com.notificationrequest.services.RequestServices;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,6 +23,11 @@ public class RequestController {
         this.requestServices  =requestServices;
 
     }
+    @GetMapping("/channels")
+    public String getAllChannels(){
+        return requestServices.getChannels();
+    }
+
     @PostMapping
     public NotificationRequestDTO newRequest(@Valid @RequestBody NotificationRequestDTO r){
        return requestServices.save(r);

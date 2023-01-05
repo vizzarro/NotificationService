@@ -41,12 +41,6 @@ public class ChannelController {
         channelServices.save(dto);
     }
 
-    @PostMapping(path = "{id}/{numSub}")
-    public void updateInfo(@PathVariable(value = "id") int id, @PathVariable(value = "numSub") int numSub){
-        ChannelDTO dto  = channelServices.findById(id);
-        dto.setNumSub(numSub);
-        channelServices.save(dto);
-    }
 
     @GetMapping(path = "count")
     public  long countChannels(){

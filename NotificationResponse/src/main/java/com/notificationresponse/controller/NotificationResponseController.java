@@ -1,16 +1,15 @@
 package com.notificationresponse.controller;
 
-import com.notificationresponse.model.NotificationResponse;
 import com.notificationresponse.model.dto.Action;
 import com.notificationresponse.model.dto.NotificationResponseDTO;
 import com.notificationresponse.model.dto.State;
 import com.notificationresponse.services.NotificationResponseServices;
-import org.json.JSONObject;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/notificationresponse")
@@ -22,7 +21,11 @@ public class NotificationResponseController {
         this.notificationResponseServices = notificationResponseServices;
     }
     @PostMapping
+    @CircuitBreaker(name = "notificationResponse", fallbackMethod = "errorMethod")
     public NotificationResponseDTO newNotificationResponse(@RequestBody  NotificationResponseDTO n){return notificationResponseServices.save(n);}
+    public String errorMethod(){
+        return "too many requests, retry later";
+    }
     @GetMapping
     public List<NotificationResponseDTO> getAllResponse(){return notificationResponseServices.findAll();}
     @GetMapping(path = "{id}")
