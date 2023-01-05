@@ -1,16 +1,12 @@
-package com.email.model;
+package com.pushnotification.model;
 
 public class Message {
-
     String sender;
-
     String receiver;
-
-    String subject;
-
-    String filePath;
-
+    String topic;
+    String title;
     String text;
+
 
     public Message(){
 
@@ -40,19 +36,19 @@ public class Message {
         this.text = text;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getTitle() {
+        return title;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

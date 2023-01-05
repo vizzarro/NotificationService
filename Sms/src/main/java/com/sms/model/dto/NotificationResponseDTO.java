@@ -8,17 +8,19 @@ public class NotificationResponseDTO {
     private String message;
     private State state;
     private Type type;
+    private String changeField;
     private int channel;
     @NotEmpty(message = "the request reference must not be empty")
     private int request;
     public NotificationResponseDTO(){
 
     }
-    public NotificationResponseDTO(String action, String message, String state, String type,int channel, int request){
+    public NotificationResponseDTO(String action, String message, String state, String type, String changeField, int channel, int request){
         this.action = Action.valueOf(action);
         this.message = message;
         this.state = State.valueOf(state);
         this.type = Type.valueOf(type);
+        this.changeField = changeField;
         this.channel = channel;
         this.request = request;
     }
@@ -77,5 +79,13 @@ public class NotificationResponseDTO {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public String getChangeField() {
+        return changeField;
+    }
+
+    public void setChangeField(String changeField) {
+        this.changeField = changeField;
     }
 }

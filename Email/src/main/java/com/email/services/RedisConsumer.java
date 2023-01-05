@@ -15,7 +15,7 @@ import java.util.List;
 public class RedisConsumer implements MessageListener {
     public final List<String> messageConsumer = new ArrayList<String>();
     private final RestConsumer restConsumer;
-    private EmailParser emailParser;
+    private final EmailParser emailParser;
 
     @Autowired
     public RedisConsumer(RestConsumer restConsumer, EmailParser emailParser){
@@ -30,7 +30,7 @@ public class RedisConsumer implements MessageListener {
         try {
             com.email.model.Message message1 = new ObjectMapper().readValue(responseDTO.getMessage(), com.email.model.Message.class);
             message1.setText(message1.getText()+" "+responseDTO.getChangeField());
-            String dto = restConsumer.createEmail("no reply",message1.getText(), null,responseDTO.getId());
+            String dto = restConsumer.createEmail(message1.getSubject(),message1.getText(), message1.getFilePath(),responseDTO.getId());
             try {
                 EmailDTO emailDTO = new ObjectMapper().readValue(dto,EmailDTO.class);
                 emailParser.parseEmail(emailDTO, responseDTO);

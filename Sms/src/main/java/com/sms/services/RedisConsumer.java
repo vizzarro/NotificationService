@@ -23,12 +23,20 @@ public class RedisConsumer implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
         NotificationResponseDTO responseDTO = restConsumer.getResponse(Integer.parseInt(message.toString()));
-        String dto = restConsumer.createSms(responseDTO.getMessage(), responseDTO.getId());
         try {
-            SmsDTO smsDTO = new ObjectMapper().readValue(dto,SmsDTO.class);
-            //todo creazione sms effettivo
+            com.sms.model.Message message1 = new ObjectMapper().readValue(responseDTO.getMessage(), com.sms.model.Message.class);
+            message1.setText(message1.getText()+" "+responseDTO.getChangeField());
+            String dto = restConsumer.createSms(message1.getText(), responseDTO.getId());
+            try {
+                SmsDTO smsDTO = new ObjectMapper().readValue(dto,SmsDTO.class);
+                //todo creazione sms effettivo
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 }

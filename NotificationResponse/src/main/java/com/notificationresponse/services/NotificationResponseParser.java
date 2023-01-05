@@ -26,18 +26,13 @@ public class NotificationResponseParser {
         switch (dto.getAction()){
             case no -> redisProducer.sendMessage(dto.getType()+"", dto.getId()+"");
             case verify -> {
-                try {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    Message message = objectMapper.readValue(dto.getMessage(), Message.class);
-                    dto.setChangeField(""+new Random().nextInt(10000));
-                    restConsumer.update(dto);
-                    redisProducer.sendMessage(dto.getType()+"",dto.getId()+"");
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
+                dto.setChangeField(""+new Random().nextInt(100000));
+                restConsumer.update(dto);
+                redisProducer.sendMessage(dto.getType()+"",dto.getId()+"");
             }
             case password -> {
-                //restConsumer.updateMessage(dto.getMessage()+" "+ RandomStringUtils.random(10,true,true), dto.getId());
+                dto.setChangeField(""+RandomStringUtils.random(15,true,true));
+                restConsumer.update(dto);
                 redisProducer.sendMessage(dto.getType()+"",dto.getId()+"");
             }
         }

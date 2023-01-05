@@ -22,13 +22,19 @@ public class RedisConsumer implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
         NotificationResponseDTO responseDTO = restConsumer.getResponse(Integer.parseInt(message.toString()));
-        String dto = restConsumer.createPushNotification(
-                "topic","Notification Service",responseDTO.getMessage(), responseDTO.getId());
         try {
-            PushNotificationDTO pushDTO = new ObjectMapper().readValue(dto,PushNotificationDTO.class);
-            //todo creazione push notification effettivo
+            com.pushnotification.model.Message message1 = new ObjectMapper().readValue(responseDTO.getMessage(), com.pushnotification.model.Message.class);
+            message1.setText(message1.getText()+" "+responseDTO.getChangeField());
+            String dto = restConsumer.createPushNotification(message1.getTopic(),message1.getTitle(),message1.getText(), responseDTO.getId());
+            try {
+                PushNotificationDTO pushDTO = new ObjectMapper().readValue(dto,PushNotificationDTO.class);
+                //todo creazione push notification effettivo
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+
     }
 }

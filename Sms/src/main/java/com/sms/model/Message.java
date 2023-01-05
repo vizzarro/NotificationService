@@ -1,14 +1,10 @@
-package com.email.model;
+package com.sms.model;
 
 public class Message {
 
     String sender;
 
     String receiver;
-
-    String subject;
-
-    String filePath;
 
     String text;
 
@@ -40,19 +36,5 @@ public class Message {
         this.text = text;
     }
 
-    public String getSubject() {
-        return subject;
-    }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
 }
