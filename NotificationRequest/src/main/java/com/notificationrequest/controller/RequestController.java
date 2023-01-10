@@ -1,9 +1,6 @@
 package com.notificationrequest.controller;
 
-import com.notificationrequest.model.dto.NotificationRequestDTO;
-import com.notificationrequest.model.dto.NotificationRequestResponse;
-import com.notificationrequest.model.dto.Priority;
-import com.notificationrequest.model.dto.State;
+import com.notificationrequest.model.dto.*;
 import com.notificationrequest.services.RequestServices;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
@@ -20,12 +17,8 @@ public class RequestController {
 
    @Autowired
     public RequestController(RequestServices requestServices){
-        this.requestServices  =requestServices;
+        this.requestServices=requestServices;
 
-    }
-    @GetMapping("/channels")
-    public String getAllChannels(){
-        return requestServices.getChannels();
     }
 
     @PostMapping
@@ -53,7 +46,7 @@ public class RequestController {
        r.setId(id);
        return requestServices.update(r);
     }
-    @PatchMapping(path = "{id}/{state}")
+    @PostMapping(path = "{id}/{state}")
     public void updateState(@PathVariable(value = "id") int id, @PathVariable(value = "state") String state){
         NotificationRequestDTO dto = requestServices.findById(id);
         dto.setState(State.valueOf(state));

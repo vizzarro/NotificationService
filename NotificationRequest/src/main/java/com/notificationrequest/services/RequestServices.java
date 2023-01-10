@@ -1,6 +1,8 @@
 package com.notificationrequest.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.notificationrequest.model.NotificationRequest;
+import com.notificationrequest.model.dto.ChannelDTO;
 import com.notificationrequest.model.dto.NotificationRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ public class RequestServices {
     private final ModelMapper modelMapper;
     private final RedisTemplate template;
     private RestConsumer restConsumer;
-    ChannelTopic topic;
+    private final ChannelTopic topic;
     @Autowired
    public RequestServices(RequestRepository requestRepository,ModelMapper modelMapper, RedisTemplate template, ChannelTopic topic, RestConsumer restConsumer){
         this.requestRepository = requestRepository;
@@ -59,8 +61,6 @@ public class RequestServices {
         Function<NotificationRequest, NotificationRequestDTO> fMap = e->modelMapper.map(e,NotificationRequestDTO.class);
         return requestRepository.findAll().stream().map(fMap).collect(Collectors.toList());
     }
-    public String getChannels(){
-        return restConsumer.getAllChannels();
-    }
+
 
 }

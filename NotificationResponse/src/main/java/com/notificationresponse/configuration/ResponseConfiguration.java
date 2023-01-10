@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -23,7 +24,7 @@ public class ResponseConfiguration {
     }
     @Bean
     ChannelTopic topic() {
-        return new ChannelTopic("notificationRequestChannel");
+        return new ChannelTopic("notificationRequest");
     }
     @Bean
     RedisMessageListenerContainer redisContainer(RedisConnectionFactory connectionFactory) {

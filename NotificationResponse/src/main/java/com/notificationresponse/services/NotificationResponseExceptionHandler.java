@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.net.ConnectException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -42,4 +44,14 @@ public class NotificationResponseExceptionHandler extends ResponseEntityExceptio
         return handleExceptionInternal(ex, errorMessages.toString(),
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+    @ExceptionHandler(ConnectException.class)
+    protected ResponseEntity<Object> handleRefuser(
+            ConnectException ex, WebRequest request) {
+        ConstraintViolationException exception;
+        String errorMessages = ex.getMessage();
+
+        return handleExceptionInternal(ex, errorMessages,
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
 }

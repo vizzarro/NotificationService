@@ -8,25 +8,51 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.core.util.Json;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
+import java.io.File;
+
+@Service
 public class EmailParser {
-    private final RestConsumer restConsumer;
+    private JavaMailSender javaMailSender;
     @Autowired
-    public EmailParser(RestConsumer restConsumer){
-        this.restConsumer = restConsumer;
+    public EmailParser(JavaMailSender javaMailSender){
+        this.javaMailSender = javaMailSender;
     }
-    public void parseEmail(EmailDTO dto, NotificationResponseDTO notificationResponseDTO) {
-        /*
-        try {
-            //Message message  = new ObjectMapper().readValue(notificationResponseDTO.getMessage(), Message.class);
-            //dto.setText(message.getText()+notificationResponseDTO.getActionField());
+    public void parseEmail(EmailDTO dto, Message message) throws MessagingException {
 
-        } catch (JsonProcessingException ex){
-            //todo gestire l'eccezione
-            System.out.println("A");
-        }*/
+        if(dto.getFilePath()!= null){
+            MimeMessage emailMessage = javaMailSender.createMimeMessage();
+
+            MimeMessageHelper helper = new MimeMessageHelper(emailMessage, true);
+            helper.setFrom(message.getSender());
+            helper.setTo(message.getReceiver());
+            helper.setSubject(dto.getSubject());
+            helper.setText(dto.getText());
+
+            FileSystemResource file
+                    = new FileSystemResource(new File(dto.getFilePath()));
+            helper.addAttachment("File", file);
+        } else {
+            SimpleMailMessage emailMessage = new SimpleMailMessage();
+            emailMessage.setFrom(message.getSender());
+            emailMessage.setTo(message.getReceiver());
+            emailMessage.setSubject(dto.getSubject());
+            emailMessage.setText(dto.getText());
+            javaMailSender.send(emailMessage);
+        }
+
+
+
+
 
     }
 }

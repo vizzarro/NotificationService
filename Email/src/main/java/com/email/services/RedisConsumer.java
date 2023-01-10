@@ -4,6 +4,7 @@ import com.email.model.dto.EmailDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.email.model.dto.NotificationResponseDTO;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
@@ -33,9 +34,9 @@ public class RedisConsumer implements MessageListener {
             String dto = restConsumer.createEmail(message1.getSubject(),message1.getText(), message1.getFilePath(),responseDTO.getId());
             try {
                 EmailDTO emailDTO = new ObjectMapper().readValue(dto,EmailDTO.class);
-                emailParser.parseEmail(emailDTO, responseDTO);
+                emailParser.parseEmail(emailDTO, message1);
 
-            } catch (JsonProcessingException e) {
+            } catch (JsonProcessingException | MessagingException e) {
                 throw new RuntimeException(e);
             }
         } catch (JsonProcessingException e) {

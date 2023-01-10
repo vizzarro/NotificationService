@@ -16,9 +16,12 @@ public class RedisConsumer implements MessageListener {
     //Logger logger = (Logger) LoggerFactory.getLogger(RedisConsumer.class);
     public final List<String> messageConsumer = new ArrayList<String>();
     RestConsumer restConsumer;
+    SmsParser smsParser;
     @Autowired
-    public RedisConsumer(RestConsumer restConsumer){
+    public RedisConsumer(RestConsumer restConsumer, SmsParser smsParser){
+
         this.restConsumer = restConsumer;
+        this.smsParser=smsParser;
     }
     @Override
     public void onMessage(Message message, byte[] pattern) {
@@ -29,7 +32,8 @@ public class RedisConsumer implements MessageListener {
             String dto = restConsumer.createSms(message1.getText(), responseDTO.getId());
             try {
                 SmsDTO smsDTO = new ObjectMapper().readValue(dto,SmsDTO.class);
-                //todo creazione sms effettivo
+                smsParser.parseSms(smsDTO, message1);
+
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }

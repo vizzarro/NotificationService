@@ -1,31 +1,23 @@
 package com.pushnotification.model;
 
 public class Message {
-    String sender;
-    String receiver;
+    String token;
     String topic;
     String title;
     String text;
+
 
 
     public Message(){
 
     }
 
-    public String getSender() {
-        return sender;
+    public String getToken() {
+        return token;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getText() {
@@ -51,4 +43,6 @@ public class Message {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
 }

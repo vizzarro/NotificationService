@@ -34,6 +34,10 @@ public class ChannelServices {
        Channel channel = channelRepository.findById(id).orElseThrow(NoSuchElementException::new);
        return  modelMapper.map(channel, ChannelDTO.class);
     }
+    public ChannelDTO findByName(String name){
+        Channel channel = channelRepository.findChannelByName(name);
+        return modelMapper.map(channel, ChannelDTO.class);
+    }
     public void delete(int id){
        channelRepository.deleteById(id);
     }

@@ -41,6 +41,11 @@ public class ChannelController {
         channelServices.save(dto);
     }
 
+    @GetMapping (path = "/channels")
+    public ChannelDTO findByName(@RequestParam String name){
+        return  channelServices.findByName(name);
+    }
+
 
     @GetMapping(path = "count")
     public  long countChannels(){

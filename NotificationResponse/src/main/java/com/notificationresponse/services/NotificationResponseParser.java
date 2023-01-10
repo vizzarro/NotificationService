@@ -7,6 +7,7 @@ import com.notificationresponse.controller.NotificationResponseController;
 import com.notificationresponse.model.NotificationResponse;
 import com.notificationresponse.model.dto.Message;
 import com.notificationresponse.model.dto.NotificationResponseDTO;
+import com.notificationresponse.model.dto.State;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,19 @@ public class NotificationResponseParser {
     }
     public void parseResponse(NotificationResponseDTO dto){
         switch (dto.getAction()){
-            case no -> redisProducer.sendMessage(dto.getType()+"", dto.getId()+"");
+            case no -> {
+                restConsumer.updateRequestState(dto.getRequest(), State.parsed.toString());
+                redisProducer.sendMessage(dto.getType()+"", dto.getId()+"");
+            }
             case verify -> {
                 dto.setChangeField(""+new Random().nextInt(100000));
+                restConsumer.updateRequestState(dto.getRequest(), State.parsed.toString());
                 restConsumer.update(dto);
                 redisProducer.sendMessage(dto.getType()+"",dto.getId()+"");
             }
             case password -> {
                 dto.setChangeField(""+RandomStringUtils.random(15,true,true));
+                restConsumer.updateRequestState(dto.getRequest(), State.parsed.toString());
                 restConsumer.update(dto);
                 redisProducer.sendMessage(dto.getType()+"",dto.getId()+"");
             }

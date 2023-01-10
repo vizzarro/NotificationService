@@ -15,9 +15,11 @@ import java.util.List;
 public class RedisConsumer implements MessageListener {
     public final List<String> messageConsumer = new ArrayList<String>();
     RestConsumer restConsumer;
+    PushNotificationParser parser;
     @Autowired
-    public RedisConsumer(RestConsumer restConsumer){
+    public RedisConsumer(RestConsumer restConsumer, PushNotificationParser parser){
         this.restConsumer = restConsumer;
+        this.parser = parser;
     }
     @Override
     public void onMessage(Message message, byte[] pattern) {
@@ -28,7 +30,7 @@ public class RedisConsumer implements MessageListener {
             String dto = restConsumer.createPushNotification(message1.getTopic(),message1.getTitle(),message1.getText(), responseDTO.getId());
             try {
                 PushNotificationDTO pushDTO = new ObjectMapper().readValue(dto,PushNotificationDTO.class);
-                //todo creazione push notification effettivo
+                parser.parseNotification(pushDTO, message1);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }

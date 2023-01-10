@@ -3,17 +3,29 @@ package com.pushnotification.services;
 
 import com.pushnotification.model.PushNotification;
 import com.pushnotification.model.dto.NotificationResponseDTO;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class RestConsumer {
+    Logger logger = Logger.getLogger(RestConsumer.class.getName());
+    @CircuitBreaker(name= "pushService", fallbackMethod = "cacheSearch")
     public NotificationResponseDTO getResponse(int id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<NotificationResponseDTO> response = restTemplate.getForEntity("http://localhost:8084/notificationresponse/"+id, NotificationResponseDTO.class);
         return response.getBody();
     }
+    public NotificationResponseDTO cacheSearch(String s, Throwable e){
+        logger.log(Level.INFO, "circuit open");
+        return null;
+    }
+
+    @CircuitBreaker(name= "newPush", fallbackMethod = "errorString")
     public String createPushNotification(String topic, String title, String message, int response){
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<PushNotification> request = new HttpEntity<>(
@@ -22,7 +34,11 @@ public class RestConsumer {
         String productCreateResponse = restTemplate.postForObject("http://localhost:8083/pushnotification", request, String.class);
         System.out.println(productCreateResponse);
         return productCreateResponse;
-
     }
+    public String errorString(String s, Throwable e){
+        logger.log(Level.INFO, "circuit open");
+        return "too many notifications retry later!";
+    }
+
 
 }

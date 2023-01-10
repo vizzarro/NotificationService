@@ -1,4 +1,4 @@
-package com.notificationresponse.model.dto;
+package com.channel.model.dto;
 
 public enum State {
     created,

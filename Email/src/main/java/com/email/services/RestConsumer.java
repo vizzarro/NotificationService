@@ -8,8 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Service
 public class RestConsumer {
+    Logger logger= Logger.getLogger(RestConsumer.class.getName());
     public NotificationResponseDTO getResponse(int id) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<NotificationResponseDTO> response = restTemplate.getForEntity("http://localhost:8084/notificationresponse/"+id, NotificationResponseDTO.class);
@@ -21,7 +25,7 @@ public class RestConsumer {
                 new Email(subject,message, fieldPath,response)
         );
         String productCreateResponse = restTemplate.postForObject("http://localhost:8085/email", request, String.class);
-        System.out.println(productCreateResponse);
+        logger.log(Level.INFO,productCreateResponse);
         return productCreateResponse;
 
     }
