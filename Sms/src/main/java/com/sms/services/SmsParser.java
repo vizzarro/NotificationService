@@ -11,13 +11,13 @@ public class SmsParser {
 
     public void parseSms(SmsDTO dto, com.sms.model.Message message1){
         PhoneNumber receiver = PhoneNumber.fetcher(new com.twilio.type.PhoneNumber(message1.getReceiver())).setCountryCode("IT").fetch();
-        /*Message message = Message.creator(
+        Message message = Message.creator(
                         receiver.getPhoneNumber(),
                         new com.twilio.type.PhoneNumber(message1.getSender()),
                         dto.getMessage())
-                .create();*/
+                .create();
 
-        System.out.println(receiver.getPhoneNumber());
+        System.out.println(message);
 
     }
 }

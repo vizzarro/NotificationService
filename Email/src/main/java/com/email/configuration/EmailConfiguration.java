@@ -41,14 +41,15 @@ public class EmailConfiguration {
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.mandrillapp.com");
-        mailSender.setPort(587);
-        mailSender.setUsername("NotificationService");
-        mailSender.setPassword("md-Av16bk03RAa6xUIDCQX8tA");
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(465);
+        mailSender.setUsername("notificationservice9877@gmail.com");
+        mailSender.setPassword("qrpujakolulxzvct");
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.enable","true");
         props.put("mail.debug", "true");
 
         return mailSender;
