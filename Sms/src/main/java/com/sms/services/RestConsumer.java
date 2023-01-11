@@ -1,6 +1,7 @@
 package com.sms.services;
 
 import com.sms.model.Sms;
+import com.sms.model.dto.NotificationRequestDTO;
 import com.sms.model.dto.NotificationResponseDTO;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -41,6 +42,26 @@ public class RestConsumer {
         logger.log(Level.INFO,productCreateResponse);;
         return productCreateResponse;
 
+    }
+    public NotificationRequestDTO getRequest(int id) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<NotificationRequestDTO> response = restTemplate.getForEntity("http://localhost:8080/notificationrequest/"+id, NotificationRequestDTO.class);
+        return response.getBody();
+    }
+    public void updateRequestState(int id, String state){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<NotificationRequestDTO> request = new HttpEntity<>(
+                getRequest(id)
+        );
+        String productCreateResponse = restTemplate.postForObject("http://localhost:8080/notificationrequest/"+id+"/"+state, request, String.class);
+    }
+
+    public void updateResponseState(int id, String state){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<NotificationResponseDTO> request = new HttpEntity<>(
+                getResponse(id)
+        );
+        String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse/"+id+"/"+state, request, String.class);
     }
 
 }

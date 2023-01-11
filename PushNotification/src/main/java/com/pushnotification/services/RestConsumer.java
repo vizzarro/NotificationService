@@ -2,6 +2,7 @@ package com.pushnotification.services;
 
 
 import com.pushnotification.model.PushNotification;
+import com.pushnotification.model.dto.NotificationRequestDTO;
 import com.pushnotification.model.dto.NotificationResponseDTO;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.http.HttpEntity;
@@ -38,6 +39,26 @@ public class RestConsumer {
     public String errorString(String s, Throwable e){
         logger.log(Level.INFO, "circuit open");
         return "too many notifications retry later!";
+    }
+    public NotificationRequestDTO getRequest(int id) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<NotificationRequestDTO> response = restTemplate.getForEntity("http://localhost:8080/notificationrequest/"+id, NotificationRequestDTO.class);
+        return response.getBody();
+    }
+    public void updateRequestState(int id, String state){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<NotificationRequestDTO> request = new HttpEntity<>(
+                getRequest(id)
+        );
+        String productCreateResponse = restTemplate.postForObject("http://localhost:8080/notificationrequest/"+id+"/"+state, request, String.class);
+    }
+
+    public void updateResponseState(int id, String state){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<NotificationResponseDTO> request = new HttpEntity<>(
+                getResponse(id)
+        );
+        String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse/"+id+"/"+state, request, String.class);
     }
 
 
