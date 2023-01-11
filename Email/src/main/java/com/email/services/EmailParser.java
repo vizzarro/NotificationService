@@ -46,10 +46,11 @@ public class EmailParser {
             emailMessage.setTo(message.getReceiver());
             emailMessage.setSubject(dto.getSubject());
             emailMessage.setText(dto.getText());
-            javaMailSender.send(emailMessage);
+            //javaMailSender.send(emailMessage);
             NotificationResponseDTO responseDTO = restConsumer.getResponse(dto.getResponse());
-            restConsumer.updateResponseState(responseDTO.getId(), State.received.toString());
-            restConsumer.updateRequestState(responseDTO.getRequest(),State.received.toString());
+            restConsumer.updateResponseState(responseDTO.getId(), State.complete.toString());
+            System.out.println(responseDTO.getRequest());
+            restConsumer.updateRequestState(responseDTO.getRequest(),State.complete.toString());
         }
 
     }

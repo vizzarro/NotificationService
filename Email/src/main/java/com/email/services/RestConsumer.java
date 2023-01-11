@@ -45,8 +45,8 @@ public class RestConsumer {
 
     public void updateResponseState(int id, String state){
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<NotificationRequestDTO> request = new HttpEntity<>(
-                getRequest(id)
+        HttpEntity<NotificationResponseDTO> request = new HttpEntity<>(
+                getResponse(id)
         );
         String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse/"+id+"/"+state, request, String.class);
     }
