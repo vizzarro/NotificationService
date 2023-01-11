@@ -18,7 +18,7 @@ import com.twilio.type.PhoneNumber;
 public class SmsConfiguration {
     @Bean
     MessageListenerAdapter messageListener() {
-        return new MessageListenerAdapter(new RedisConsumer(new RestConsumer(),new SmsParser()));
+        return new MessageListenerAdapter(new RedisConsumer(new RestConsumer(),new SmsParser(new RestConsumer())));
     }
     @Bean
     ChannelTopic topic() {

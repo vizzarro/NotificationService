@@ -28,7 +28,7 @@ public class PushConfiguration {
     private String fireBaseConfig;
     @Bean
     MessageListenerAdapter messageListener() {
-        return new MessageListenerAdapter(new RedisConsumer(new RestConsumer(),new PushNotificationParser(firebaseMessaging(firebaseApp(googleCredentials())))));
+        return new MessageListenerAdapter(new RedisConsumer(new RestConsumer(),new PushNotificationParser(firebaseMessaging(firebaseApp(googleCredentials())),new RestConsumer())));
     }
     @Bean
     ChannelTopic topic() {

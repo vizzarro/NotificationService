@@ -1,12 +1,25 @@
 package com.sms.services;
 
+import com.sms.model.dto.NotificationResponseDTO;
 import com.sms.model.dto.SmsDTO;
+import com.sms.model.dto.State;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 //import com.twilio.type.PhoneNumber;
 import com.twilio.rest.lookups.v1.PhoneNumber;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SmsParser {
+    Logger logger= Logger.getLogger(SmsParser.class.getName());
+    private RestConsumer restConsumer;
+    @Autowired
+    public SmsParser(RestConsumer restConsumer){
+        this.restConsumer=restConsumer;
+
+    }
 
 
     public void parseSms(SmsDTO dto, com.sms.model.Message message1){
@@ -16,8 +29,12 @@ public class SmsParser {
                         new com.twilio.type.PhoneNumber(message1.getSender()),
                         dto.getMessage())
                 .create();
+        NotificationResponseDTO responseDTO = restConsumer.getResponse(dto.getResponse());
+        restConsumer.updateResponseState(responseDTO.getId(), State.complete.toString());
+        System.out.println(responseDTO.getRequest());
+        restConsumer.updateRequestState(responseDTO.getRequest(),State.complete.toString());
 
-        System.out.println(message);
+        logger.log(Level.INFO, message.toString());
 
     }
 }
