@@ -5,5 +5,5 @@ public enum State {
     sended,
     processed,
     parsed,
-    received
+    received //completed
 }

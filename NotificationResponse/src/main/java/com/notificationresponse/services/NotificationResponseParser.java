@@ -30,6 +30,7 @@ public class NotificationResponseParser {
                 redisProducer.sendMessage(dto.getType()+"", dto.getId()+"");
             }
             case verify -> {
+                //todo qualche commento
                 dto.setChangeField(""+new Random().nextInt(100000));
                 restConsumer.updateRequestState(dto.getRequest(), State.parsed.toString());
                 restConsumer.update(dto);

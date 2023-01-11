@@ -20,7 +20,7 @@ import java.util.Properties;
 public class EmailConfiguration {
     @Bean
     MessageListenerAdapter messageListener() {
-        return new MessageListenerAdapter(new RedisConsumer(new RestConsumer(), new EmailParser(getJavaMailSender())));
+        return new MessageListenerAdapter(new RedisConsumer(new RestConsumer(), new EmailParser(getJavaMailSender(), new RestConsumer())));
     }
     @Bean
     ChannelTopic topic() {

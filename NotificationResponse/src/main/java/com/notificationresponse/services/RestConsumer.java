@@ -5,25 +5,14 @@ import com.notificationresponse.model.NotificationResponse;
 import com.notificationresponse.model.dto.ChannelDTO;
 import com.notificationresponse.model.dto.NotificationRequestDTO;
 import com.notificationresponse.model.dto.NotificationResponseDTO;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.EnableRetry;
-import org.springframework.retry.annotation.Recover;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Service
 public class RestConsumer {
@@ -40,8 +29,13 @@ public class RestConsumer {
 
     public NotificationRequestDTO getRequest(int id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<NotificationRequestDTO> response = restTemplate.getForEntity("http://localhost:8080/notificationrequest/" + id, NotificationRequestDTO.class);
-        return response.getBody();
+        try{
+            ResponseEntity<NotificationRequestDTO> response = restTemplate.getForEntity("http://localhost:8080/notificationrequest/" + id, NotificationRequestDTO.class);
+            return response.getBody();
+        } catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 
     public ChannelDTO getChannel(String name) {
@@ -55,15 +49,17 @@ public class RestConsumer {
         }
     }
 
-    @CircuitBreaker(name = "createService")
     public String createNotificationResponse(String action, String message, String state, String type,String actionField, int channel, int req) {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<NotificationResponse> request = new HttpEntity<>(
                 new NotificationResponse(action, message, state, type,actionField, channel, req)
         );
-        String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse", request, String.class);
-        System.out.println(productCreateResponse);
-        return productCreateResponse;
+        try{
+            String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse", request, String.class);
+            return productCreateResponse;
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
 

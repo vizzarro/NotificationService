@@ -2,15 +2,11 @@ package com.email.services;
 
 import com.email.model.Message;
 import com.email.model.dto.EmailDTO;
+import com.email.model.dto.NotificationRequestDTO;
 import com.email.model.dto.NotificationResponseDTO;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.core.util.Json;
+import com.email.model.dto.State;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -22,10 +18,12 @@ import java.io.File;
 
 @Service
 public class EmailParser {
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
+    private RestConsumer restConsumer;
     @Autowired
-    public EmailParser(JavaMailSender javaMailSender){
+    public EmailParser(JavaMailSender javaMailSender, RestConsumer restConsumer){
         this.javaMailSender = javaMailSender;
+        this.restConsumer = restConsumer;
     }
     public void parseEmail(EmailDTO dto, Message message) throws MessagingException {
 
@@ -41,6 +39,7 @@ public class EmailParser {
             FileSystemResource file
                     = new FileSystemResource(new File(dto.getFilePath()));
             helper.addAttachment("File", file);
+            javaMailSender.send(emailMessage);
         } else {
             SimpleMailMessage emailMessage = new SimpleMailMessage();
             emailMessage.setFrom(message.getSender());
@@ -48,11 +47,10 @@ public class EmailParser {
             emailMessage.setSubject(dto.getSubject());
             emailMessage.setText(dto.getText());
             javaMailSender.send(emailMessage);
+            NotificationResponseDTO responseDTO = restConsumer.getResponse(dto.getResponse());
+            restConsumer.updateResponseState(responseDTO.getId(), State.received.toString());
+            restConsumer.updateRequestState(responseDTO.getRequest(),State.received.toString());
         }
-
-
-
-
 
     }
 }
