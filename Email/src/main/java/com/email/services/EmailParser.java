@@ -30,19 +30,56 @@ public class EmailParser {
 
         if (dto.getFilePath() != null) {
             MimeMessage emailMessage = javaMailSender.createMimeMessage();
-
             MimeMessageHelper helper = new MimeMessageHelper(emailMessage, true);
-            helper.setFrom(message.getSender());
-            for (String r : message.getReceiver().getAddress()) {
-                helper.setTo(r);
-                helper.setSubject(dto.getSubject());
-                helper.setText(dto.getText());
 
-                FileSystemResource file
-                        = new FileSystemResource(new File(dto.getFilePath()));
-                helper.addAttachment("File", file);
-                javaMailSender.send(emailMessage);
+            helper.setFrom(message.getSender());
+            helper.setSubject(dto.getSubject());
+            helper.setText(dto.getText());
+
+            if (message.getReceiver().getAddressCC() != null && message.getReceiver().getAddressBCC() != null && message.getReceiver().getAddress() != null) {
+                String[] bcc = message.getReceiver().getAddressBCC().toArray(new String[0]);
+                helper.setBcc(bcc);
+                String[] cc = message.getReceiver().getAddressCC().toArray(new String[0]);
+                helper.setCc(cc);
+                String[] to = message.getReceiver().getAddress().toArray(new String[0]);
+                helper.setTo(to);
             }
+            if (message.getReceiver().getAddress() != null && message.getReceiver().getAddressCC() == null && message.getReceiver().getAddressBCC() == null) {
+                String[] to = message.getReceiver().getAddress().toArray(new String[0]);
+                helper.setTo(to);
+            }
+            if (message.getReceiver().getAddress() == null && message.getReceiver().getAddressCC() != null && message.getReceiver().getAddressBCC() != null) {
+                String[] bcc = message.getReceiver().getAddressBCC().toArray(new String[0]);
+                helper.setBcc(bcc);
+                String[] cc = message.getReceiver().getAddressCC().toArray(new String[0]);
+                helper.setCc(cc);
+            }
+            if (message.getReceiver().getAddress() != null && message.getReceiver().getAddressCC() != null && message.getReceiver().getAddressBCC() == null) {
+                String[] cc = message.getReceiver().getAddressCC().toArray(new String[0]);
+                helper.setCc(cc);
+                String[] to = message.getReceiver().getAddress().toArray(new String[0]);
+                helper.setTo(to);
+            }
+            if (message.getReceiver().getAddress() != null && message.getReceiver().getAddressCC() == null && message.getReceiver().getAddressBCC() != null) {
+                String[] bcc = message.getReceiver().getAddressBCC().toArray(new String[0]);
+                helper.setBcc(bcc);
+                String[] to = message.getReceiver().getAddress().toArray(new String[0]);
+                helper.setTo(to);
+            }
+            if (message.getReceiver().getAddress() == null && message.getReceiver().getAddressCC() == null && message.getReceiver().getAddressBCC() != null) {
+                String[] bcc = message.getReceiver().getAddressBCC().toArray(new String[0]);
+                helper.setBcc(bcc);
+            }
+            if (message.getReceiver().getAddress() == null && message.getReceiver().getAddressCC() != null && message.getReceiver().getAddressBCC() == null) {
+                String[] cc = message.getReceiver().getAddressCC().toArray(new String[0]);
+                helper.setCc(cc);
+            }
+            FileSystemResource file
+                    = new FileSystemResource(new File(dto.getFilePath()));
+            helper.addAttachment("File", file);
+
+            updateState(dto);
+            javaMailSender.send(emailMessage);
 
         } else {
             SimpleMailMessage emailMessage = new SimpleMailMessage();
@@ -51,12 +88,44 @@ public class EmailParser {
             emailMessage.setSubject(dto.getSubject());
             emailMessage.setText(dto.getText());
 
-            String[] bcc = message.getReceiver().getAddressBCC().toArray(new String[0]);
-            emailMessage.setBcc(bcc);
-            String[] cc = message.getReceiver().getAddressCC().toArray(new String[0]);
-            emailMessage.setCc(cc);
-            String[] to = message.getReceiver().getAddress().toArray(new String[0]);
-            emailMessage.setTo(to);
+            if (message.getReceiver().getAddressCC() != null && message.getReceiver().getAddressBCC() != null && message.getReceiver().getAddress() != null) {
+                String[] bcc = message.getReceiver().getAddressBCC().toArray(new String[0]);
+                emailMessage.setBcc(bcc);
+                String[] cc = message.getReceiver().getAddressCC().toArray(new String[0]);
+                emailMessage.setCc(cc);
+                String[] to = message.getReceiver().getAddress().toArray(new String[0]);
+                emailMessage.setTo(to);
+            }
+            if (message.getReceiver().getAddress() != null && message.getReceiver().getAddressCC() == null && message.getReceiver().getAddressBCC() == null) {
+                String[] to = message.getReceiver().getAddress().toArray(new String[0]);
+                emailMessage.setTo(to);
+            }
+            if (message.getReceiver().getAddress() == null && message.getReceiver().getAddressCC() != null && message.getReceiver().getAddressBCC() != null) {
+                String[] bcc = message.getReceiver().getAddressBCC().toArray(new String[0]);
+                emailMessage.setBcc(bcc);
+                String[] cc = message.getReceiver().getAddressCC().toArray(new String[0]);
+                emailMessage.setCc(cc);
+            }
+            if (message.getReceiver().getAddress() != null && message.getReceiver().getAddressCC() != null && message.getReceiver().getAddressBCC() == null) {
+                String[] cc = message.getReceiver().getAddressCC().toArray(new String[0]);
+                emailMessage.setCc(cc);
+                String[] to = message.getReceiver().getAddress().toArray(new String[0]);
+                emailMessage.setTo(to);
+            }
+            if (message.getReceiver().getAddress() != null && message.getReceiver().getAddressCC() == null && message.getReceiver().getAddressBCC() != null) {
+                String[] bcc = message.getReceiver().getAddressBCC().toArray(new String[0]);
+                emailMessage.setBcc(bcc);
+                String[] to = message.getReceiver().getAddress().toArray(new String[0]);
+                emailMessage.setTo(to);
+            }
+            if (message.getReceiver().getAddress() == null && message.getReceiver().getAddressCC() == null && message.getReceiver().getAddressBCC() != null) {
+                String[] bcc = message.getReceiver().getAddressBCC().toArray(new String[0]);
+                emailMessage.setBcc(bcc);
+            }
+            if (message.getReceiver().getAddress() == null && message.getReceiver().getAddressCC() != null && message.getReceiver().getAddressBCC() == null) {
+                String[] cc = message.getReceiver().getAddressCC().toArray(new String[0]);
+                emailMessage.setCc(cc);
+            }
             updateState(dto);
             javaMailSender.send(emailMessage);
 
