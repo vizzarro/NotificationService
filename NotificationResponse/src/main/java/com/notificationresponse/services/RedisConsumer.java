@@ -17,11 +17,12 @@ import java.util.logging.Logger;
 
 public class RedisConsumer implements MessageListener {
     public final List<String> messageConsumer = new ArrayList<String>();
-    Logger logger = Logger.getLogger(RedisConsumer.class.getName());
     private final RestConsumer restConsumer;
     private final NotificationResponseParser responseParser;
+    Logger logger = Logger.getLogger(RedisConsumer.class.getName());
+
     @Autowired
-    public RedisConsumer(RestConsumer restConsumer, NotificationResponseParser responseParser){
+    public RedisConsumer(RestConsumer restConsumer, NotificationResponseParser responseParser) {
         this.restConsumer = restConsumer;
         this.responseParser = responseParser;
     }
@@ -31,18 +32,15 @@ public class RedisConsumer implements MessageListener {
         System.out.println(message.toString());//qui da mettere il log
         NotificationRequestDTO requestDTO = restConsumer.getRequest(Integer.parseInt(message.toString()));
 
-            ChannelDTO channelDTO = restConsumer.getChannel(requestDTO.getType().toString());
-            String dto = restConsumer.createNotificationResponse(requestDTO.getAction().toString(),requestDTO.getMessage(), State.created.toString(),requestDTO.getType().toString(),"",channelDTO.getId(),Integer.parseInt(requestDTO.getId().toString()));
-            try {
-                NotificationResponseDTO responseDTO = new ObjectMapper().readValue(dto,NotificationResponseDTO.class);
-                responseParser.parseResponse(responseDTO);
+        ChannelDTO channelDTO = restConsumer.getChannel(requestDTO.getType().toString());
+        String dto = restConsumer.createNotificationResponse(requestDTO.getAction().toString(), requestDTO.getMessage(), State.created.toString(), requestDTO.getType().toString(), "", channelDTO.getId(), Integer.parseInt(requestDTO.getId().toString()));
+        try {
+            NotificationResponseDTO responseDTO = new ObjectMapper().readValue(dto, NotificationResponseDTO.class);
+            responseParser.parseResponse(responseDTO);
 
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-
-
-
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }

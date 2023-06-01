@@ -4,18 +4,18 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=notificationresponse
+    url: jdbc:postgresql://localhost:5432/dev?createDatabaseIfNotExist=true
     username: postgres
     password: postgres
-
+  redis:
+    host: localhost
+    port: 6379
 server:
   port: 8084
 
-
-
 management:
   health:
-    circuitbreakers:
+    circuit-breakers:
       enabled: true
   endpoints:
     web:
@@ -27,7 +27,7 @@ management:
 
 
 resilience4j:
-  circuitbreaker:
+  circuit-breaker:
     instances:
       createService:
         registerHealthIndicator: true

@@ -1,12 +1,12 @@
 package com.notificationrequest.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.notificationrequest.model.NotificationRequest;
-import com.notificationrequest.model.dto.ChannelDTO;
+import com.notificationrequest.model.dto.EmailSenderRequestDTO;
 import com.notificationrequest.model.dto.NotificationRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -23,27 +22,32 @@ public class RequestServices {
     private final RequestRepository requestRepository;
     private final ModelMapper modelMapper;
     private final RedisTemplate template;
-    private RestConsumer restConsumer;
     private final ChannelTopic topic;
+    private RestConsumer restConsumer;
+
     @Autowired
-   public RequestServices(RequestRepository requestRepository,ModelMapper modelMapper, RedisTemplate template, ChannelTopic topic, RestConsumer restConsumer){
+    public RequestServices(RequestRepository requestRepository, ModelMapper modelMapper, RedisTemplate template, ChannelTopic topic, RestConsumer restConsumer) {
         this.requestRepository = requestRepository;
-        this.modelMapper  = modelMapper;
+        this.modelMapper = modelMapper;
         this.template = template;
         this.topic = topic;
         this.restConsumer = restConsumer;
     }
 
-    public NotificationRequestDTO save(NotificationRequestDTO r){
+    public EmailSenderRequestDTO save(EmailSenderRequestDTO r) throws JsonProcessingException {
         NotificationRequest request = modelMapper.map(r, NotificationRequest.class);
         request.setDate(LocalDate.now());
         request.setTime(LocalTime.now());
+        ObjectMapper objectMapper = new ObjectMapper();
+        request.setMessage(objectMapper.writeValueAsString(r.getMessage()));
+        System.out.println("message: " + objectMapper.writeValueAsString(r.getMessage()));
         requestRepository.save(request);
         //qui ci va un try catch
-        template.convertAndSend(topic.getTopic(), request.getId()+"");
-        return modelMapper.map(request, NotificationRequestDTO.class);
+        template.convertAndSend(topic.getTopic(), request.getId() + "");
+        return modelMapper.map(request, EmailSenderRequestDTO.class);
     }
-    public NotificationRequestDTO update(NotificationRequestDTO r){
+
+    public NotificationRequestDTO update(NotificationRequestDTO r) throws JsonProcessingException {
         NotificationRequest request = modelMapper.map(r, NotificationRequest.class);
         request.setDate(LocalDate.now());
         request.setTime(LocalTime.now());
@@ -51,14 +55,21 @@ public class RequestServices {
         return modelMapper.map(request, NotificationRequestDTO.class);
     }
 
-    public NotificationRequestDTO findById(int id){
+    public NotificationRequestDTO findById(int id) {
         NotificationRequest request = requestRepository.findById(id).orElseThrow(/*NoSuchElementException::new*/);
         return modelMapper.map(request, NotificationRequestDTO.class);
     }
-    public void delete(int id) {requestRepository.deleteById(id);}
-    public long count(){return requestRepository.count();}
-    public List<NotificationRequestDTO> findAll(){
-        Function<NotificationRequest, NotificationRequestDTO> fMap = e->modelMapper.map(e,NotificationRequestDTO.class);
+
+    public void delete(int id) {
+        requestRepository.deleteById(id);
+    }
+
+    public long count() {
+        return requestRepository.count();
+    }
+
+    public List<NotificationRequestDTO> findAll() {
+        Function<NotificationRequest, NotificationRequestDTO> fMap = e -> modelMapper.map(e, NotificationRequestDTO.class);
         return requestRepository.findAll().stream().map(fMap).collect(Collectors.toList());
     }
 

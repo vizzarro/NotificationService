@@ -9,7 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,11 +29,12 @@ public class NotificationRequestDTO {
     private Priority priority;
     private boolean multicast;
 
-    public NotificationRequestDTO(){}
+    public NotificationRequestDTO() {
+    }
 
-    public NotificationRequestDTO(String state, String message, String type, String action, String priority, Boolean multicast){
+    public NotificationRequestDTO(String state, String message, String type, String action, String priority, Boolean multicast) {
         this.state = State.valueOf(state);
-        this.message= message;
+        this.message = message;
         this.type = Type.valueOf(type);
         this.action = Action.valueOf(action);
         this.date = LocalDate.now();
@@ -67,6 +67,7 @@ public class NotificationRequestDTO {
     public void setType(Type type) {
         this.type = type;
     }
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
@@ -77,6 +78,7 @@ public class NotificationRequestDTO {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -87,6 +89,7 @@ public class NotificationRequestDTO {
     public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
     }
+
     @JsonFormat(pattern = "HH:mm:ss")
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     @JsonSerialize(using = LocalTimeSerializer.class)

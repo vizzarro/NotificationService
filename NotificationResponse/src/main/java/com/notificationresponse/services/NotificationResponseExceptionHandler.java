@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -26,6 +25,7 @@ public class NotificationResponseExceptionHandler extends ResponseEntityExceptio
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
+
     @ExceptionHandler(EmptyResultDataAccessException.class)
     protected ResponseEntity<Object> handleEmpty(
             RuntimeException ex, WebRequest request) {
@@ -33,6 +33,7 @@ public class NotificationResponseExceptionHandler extends ResponseEntityExceptio
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.NO_CONTENT, request);
     }
+
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<Object> handleCostraint(
             ConstraintViolationException ex, WebRequest request) {
@@ -44,6 +45,7 @@ public class NotificationResponseExceptionHandler extends ResponseEntityExceptio
         return handleExceptionInternal(ex, errorMessages.toString(),
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
     @ExceptionHandler(ConnectException.class)
     protected ResponseEntity<Object> handleRefuser(
             ConnectException ex, WebRequest request) {

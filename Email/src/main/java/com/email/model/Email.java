@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name= "email1_table")
+@Table(name = "email1_table")
 public class Email {
     @Id
     @GeneratedValue
@@ -19,14 +19,17 @@ public class Email {
     @NotEmpty(message = "the response reference must not be empty")
     private int response;
 
-    private Email(){
+    private int receiver;
+
+    private Email() {
 
     }
-    public Email(String subject, String text, String filePath, int response){
-        this.subject= subject;
-        this.text=text;
-        this.filePath=filePath;
-        this.response=response;
+
+    public Email(String subject, String text, String filePath, int response) {
+        this.subject = subject;
+        this.text = text;
+        this.filePath = filePath;
+        this.response = response;
     }
 
     public String getSubject() {
@@ -56,6 +59,7 @@ public class Email {
     public int getResponse() {
         return response;
     }
+
     public void setResponse(int response) {
         this.response = response;
     }

@@ -10,7 +10,8 @@ public class Message {
         this.receiver = receiver;
         this.text = text;
     }
-    public Message(){
+
+    public Message() {
 
     }
 

@@ -22,10 +22,12 @@ public class EmailConfiguration {
     MessageListenerAdapter messageListener() {
         return new MessageListenerAdapter(new RedisConsumer(new RestConsumer(), new EmailParser(getJavaMailSender(), new RestConsumer())));
     }
+
     @Bean
     ChannelTopic topic() {
         return new ChannelTopic("email");
     }
+
     @Bean
     RedisMessageListenerContainer redisContainer(RedisConnectionFactory connectionFactory) {
         RedisMessageListenerContainer container
@@ -34,22 +36,24 @@ public class EmailConfiguration {
         container.addMessageListener(messageListener(), topic());
         return container;
     }
+
     @Bean
     StringRedisTemplate template(RedisConnectionFactory connectionFactory) {
         return new StringRedisTemplate(connectionFactory);
     }
+
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
+        mailSender.setHost("smtp.sendgrid.net");
         mailSender.setPort(465);
-        mailSender.setUsername("notificationservice9877@gmail.com");
-        mailSender.setPassword("qrpujakolulxzvct");
+        mailSender.setUsername("apikey");
+        mailSender.setPassword("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");
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.ssl.enable","true");
+        props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.debug", "true");
 
         return mailSender;

@@ -4,7 +4,9 @@ import java.util.List;
 
 public class NotificationRequestResponse {
     private List<NotificationRequestDTO> data;
-    public NotificationRequestResponse(){}
+
+    public NotificationRequestResponse() {
+    }
 
     public List<NotificationRequestDTO> getData() {
         return data;

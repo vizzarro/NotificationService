@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class RedisProducer {
     StringRedisTemplate template;
+
     @Autowired
-    public RedisProducer(StringRedisTemplate template){
+    public RedisProducer(StringRedisTemplate template) {
         this.template = template;
     }
-    public void sendMessage(String channel, String message){
+
+    public void sendMessage(String channel, String message) {
         template.convertAndSend(channel, message);
     }
 }

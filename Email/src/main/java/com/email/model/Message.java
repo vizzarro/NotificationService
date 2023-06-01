@@ -1,10 +1,12 @@
 package com.email.model;
 
+import jakarta.persistence.Embedded;
+
 public class Message {
 
     String sender;
-
-    String receiver;
+    @Embedded
+    Receiver receiver;
 
     String subject;
 
@@ -12,7 +14,7 @@ public class Message {
 
     String text;
 
-    public Message(){
+    public Message() {
 
     }
 
@@ -24,11 +26,11 @@ public class Message {
         this.sender = sender;
     }
 
-    public String getReceiver() {
+    public Receiver getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(String receiver) {
+    public void setReceiver(Receiver receiver) {
         this.receiver = receiver;
     }
 

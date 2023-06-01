@@ -5,12 +5,13 @@ public class ChannelDTO {
     private String name;
     private String info;
 
-    public ChannelDTO(){}
+    public ChannelDTO() {
+    }
 
-    public ChannelDTO(int id,String name, String info){
+    public ChannelDTO(int id, String name, String info) {
         this.id = id;
-        this.name=name;
-        this.info=info;
+        this.name = name;
+        this.info = info;
     }
 
     public int getId() {

@@ -17,11 +17,12 @@ public class Channel {
     private String info;
 
 
-    public  Channel(){}
+    public Channel() {
+    }
 
-    public Channel(String name, String info){
-        this.name=name;
-        this.info=info;
+    public Channel(String name, String info) {
+        this.name = name;
+        this.info = info;
     }
 
     public String getName() {

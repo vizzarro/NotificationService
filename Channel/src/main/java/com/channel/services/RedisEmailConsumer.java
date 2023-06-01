@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,18 +17,18 @@ public class RedisEmailConsumer implements MessageListener {
 
 
     @Autowired
-    public RedisEmailConsumer(RestConsumer restConsumer){
+    public RedisEmailConsumer(RestConsumer restConsumer) {
         this.restConsumer = restConsumer;
 
     }
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
-        logger.log(Level.INFO," channel: email , message:"+message.toString());
+        logger.log(Level.INFO, " channel: email , message:" + message.toString());
         NotificationResponseDTO responseDTO = restConsumer.getResponse(Integer.parseInt(message.toString()));
-        logger.log(Level.INFO, "response id:"+responseDTO.getId()+"");
+        logger.log(Level.INFO, "response id:" + responseDTO.getId() + "");
         NotificationRequestDTO requestDTO = restConsumer.getRequest(responseDTO.getRequest());
-        logger.log(Level.INFO, "request id:"+requestDTO.getId()+"");
+        logger.log(Level.INFO, "request id:" + requestDTO.getId() + "");
         restConsumer.updateRequestState(Integer.parseInt(requestDTO.getId().toString()), State.processed.toString());
 
     }

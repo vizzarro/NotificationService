@@ -7,14 +7,15 @@ public class EmailDTO {
     private String filePath;
     private int response;
 
-    private EmailDTO(){
+    private EmailDTO() {
 
     }
-    public EmailDTO(String subject, String text, String filePath, int response){
-        this.subject= subject;
-        this.text=text;
-        this.filePath=filePath;
-        this.response=response;
+
+    public EmailDTO(String subject, String text, String filePath, int response) {
+        this.subject = subject;
+        this.text = text;
+        this.filePath = filePath;
+        this.response = response;
     }
 
     public int getId() {

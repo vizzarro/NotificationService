@@ -1,19 +1,17 @@
 package com.notificationresponse.model;
 
-import com.notificationresponse.model.dto.Action;
+import com.notificationresponse.model.dto.State;
 import com.notificationresponse.model.dto.Type;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import com.notificationresponse.model.dto.State;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import org.json.JSONObject;
 
 @Entity
-@Table(name= "response_notification")
-public  class NotificationResponse {
+@Table(name = "response_notification")
+public class NotificationResponse {
 
     @Id
     @GeneratedValue
@@ -33,15 +31,16 @@ public  class NotificationResponse {
     @NotNull(message = "the request reference must not be null")
     private int request;
 
-    public NotificationResponse(){
+    public NotificationResponse() {
 
     }
-    public NotificationResponse(String action, String message, String state,String type,String changeField, int channel, int request){
+
+    public NotificationResponse(String action, String message, String state, String type, String changeField, int channel, int request) {
         this.action = action;
         this.message = message;
         this.state = State.valueOf(state).toString();
         this.type = Type.valueOf(type).toString();
-        this.changeField  = changeField;
+        this.changeField = changeField;
         this.channel = channel;
         this.request = request;
     }

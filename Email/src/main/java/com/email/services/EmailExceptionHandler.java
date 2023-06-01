@@ -24,6 +24,7 @@ public class EmailExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
+
     @ExceptionHandler(EmptyResultDataAccessException.class)
     protected ResponseEntity<Object> handleEmpty(
             RuntimeException ex, WebRequest request) {
@@ -31,6 +32,7 @@ public class EmailExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.NO_CONTENT, request); //o NOT_FOUND???
     }
+
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<Object> handleCostraint(
             ConstraintViolationException ex, WebRequest request) {

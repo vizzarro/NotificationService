@@ -4,8 +4,10 @@ import com.notificationrequest.model.dto.Action;
 import com.notificationrequest.model.dto.Priority;
 import com.notificationrequest.model.dto.State;
 import com.notificationrequest.model.dto.Type;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -34,18 +36,19 @@ public class NotificationRequest {
     private LocalTime time;
     @NotEmpty(message = "priority field is required")
     private String priority;
-    @NotNull(message = "multicast field is required")
+    @NotNull(message = " field is required")
     private boolean multicast;
 
-    public NotificationRequest(){
+    public NotificationRequest() {
         this.date = LocalDate.now();
         this.time = LocalTime.now();
     }
-    public NotificationRequest(String state, String message, String type, String action,String priority, Boolean multicast){
+
+    public NotificationRequest(String state, String message, String type, String action, String priority, Boolean multicast) {
         this.state = State.valueOf(state).toString();
-        this.message= message;
+        this.message = message;
         this.type = Type.valueOf(type).toString();
-        this.action= Action.valueOf(action).toString();
+        this.action = Action.valueOf(action).toString();
         this.date = LocalDate.now();
         this.time = LocalTime.now();
         this.updateDate = null;

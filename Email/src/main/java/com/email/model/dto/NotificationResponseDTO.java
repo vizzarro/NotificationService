@@ -12,10 +12,12 @@ public class NotificationResponseDTO {
     private int channel;
     @NotEmpty(message = "the request reference must not be empty")
     private int request;
-    public NotificationResponseDTO(){
+
+    public NotificationResponseDTO() {
 
     }
-    public NotificationResponseDTO(String action, String message, String state, String type, String changeField, int channel, int request){
+
+    public NotificationResponseDTO(String action, String message, String state, String type, String changeField, int channel, int request) {
         this.action = Action.valueOf(action);
         this.message = message;
         this.state = State.valueOf(state);
