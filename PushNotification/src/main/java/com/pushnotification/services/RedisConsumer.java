@@ -2,7 +2,7 @@ package com.pushnotification.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pushnotification.model.dto.NotificationResponseDTO;
+import com.pushnotification.model.dto.NotificationRequestDTO;
 import com.pushnotification.model.dto.PushNotificationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
@@ -23,7 +23,7 @@ public class RedisConsumer implements MessageListener {
     }
     @Override
     public void onMessage(Message message, byte[] pattern) {
-        NotificationResponseDTO responseDTO = restConsumer.getResponse(Integer.parseInt(message.toString()));
+        NotificationRequestDTO responseDTO = restConsumer.getResponse(Integer.parseInt(message.toString()));
         try {
             com.pushnotification.model.Message message1 = new ObjectMapper().readValue(responseDTO.getMessage(), com.pushnotification.model.Message.class);
             message1.setText(message1.getText()+" "+responseDTO.getChangeField());

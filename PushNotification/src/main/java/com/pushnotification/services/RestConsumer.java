@@ -3,7 +3,6 @@ package com.pushnotification.services;
 
 import com.pushnotification.model.PushNotification;
 import com.pushnotification.model.dto.NotificationRequestDTO;
-import com.pushnotification.model.dto.NotificationResponseDTO;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,12 @@ import java.util.logging.Logger;
 public class RestConsumer {
     Logger logger = Logger.getLogger(RestConsumer.class.getName());
     @CircuitBreaker(name= "pushService", fallbackMethod = "cacheSearch")
-    public NotificationResponseDTO getResponse(int id) {
+    public NotificationRequestDTO getResponse(int id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<NotificationResponseDTO> response = restTemplate.getForEntity("http://localhost:8084/notificationresponse/"+id, NotificationResponseDTO.class);
+        ResponseEntity<NotificationRequestDTO> response = restTemplate.getForEntity("http://localhost:8080/notificationrequest/"+id, NotificationRequestDTO.class);
         return response.getBody();
     }
-    public NotificationResponseDTO cacheSearch(String s, Throwable e){
+    public NotificationRequestDTO cacheSearch(String s, Throwable e){
         logger.log(Level.INFO, "circuit open");
         return null;
     }
@@ -55,10 +54,10 @@ public class RestConsumer {
 
     public void updateResponseState(int id, String state){
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<NotificationResponseDTO> request = new HttpEntity<>(
+        HttpEntity<NotificationRequestDTO> request = new HttpEntity<>(
                 getResponse(id)
         );
-        String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse/"+id+"/"+state, request, String.class);
+        String productCreateResponse = restTemplate.postForObject("http://localhost:8080/notificationrequest/"+id+"/"+state, request, String.class);
     }
 
 

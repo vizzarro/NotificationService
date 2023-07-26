@@ -2,6 +2,7 @@ package com.sms.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sms.model.dto.NotificationRequestDTO;
 import com.sms.model.dto.NotificationResponseDTO;
 import com.sms.model.dto.SmsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class RedisConsumer implements MessageListener {
     }
     @Override
     public void onMessage(Message message, byte[] pattern) {
-        NotificationResponseDTO responseDTO = restConsumer.getResponse(Integer.parseInt(message.toString()));
+        NotificationRequestDTO responseDTO = restConsumer.getRequest(Integer.parseInt(message.toString()));
         try {
             com.sms.model.Message message1 = new ObjectMapper().readValue(responseDTO.getMessage(), com.sms.model.Message.class);
             message1.setText(message1.getText()+" "+responseDTO.getChangeField());

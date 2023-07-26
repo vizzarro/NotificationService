@@ -7,8 +7,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=notificationrequest
     username: postgres
     password: postgres
+
   redis:
-    host: localhost
+     host: localhost
+
 
 management:
   health:

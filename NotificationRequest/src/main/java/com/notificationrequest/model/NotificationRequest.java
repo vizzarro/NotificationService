@@ -5,9 +5,9 @@ import com.notificationrequest.model.dto.Priority;
 import com.notificationrequest.model.dto.State;
 import com.notificationrequest.model.dto.Type;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,15 +20,15 @@ public class NotificationRequest {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private int id;
 
     private String state;
     @NotEmpty(message = "message field is required")
-    private String message;// message source?
+    private String message;
     @NotEmpty(message = "type field is required")
     private String type;
     @NotEmpty(message = "action field is required")
-    private String action;//vedere se esiste il default o metterlo tramite sql
+    private String action;
     private LocalDate date;
     private LocalDateTime updateDate;
     private LocalTime time;
@@ -36,16 +36,19 @@ public class NotificationRequest {
     private String priority;
     @NotNull(message = "multicast field is required")
     private boolean multicast;
+    @org.hibernate.annotations.ColumnDefault("")
+    private String changeField;
 
     public NotificationRequest(){
         this.date = LocalDate.now();
         this.time = LocalTime.now();
     }
-    public NotificationRequest(String state, String message, String type, String action,String priority, Boolean multicast){
+    public NotificationRequest(String state, String message, String type, String action, String priority, Boolean multicast, String changeField){
         this.state = State.valueOf(state).toString();
         this.message= message;
         this.type = Type.valueOf(type).toString();
         this.action= Action.valueOf(action).toString();
+        this.changeField = changeField;
         this.date = LocalDate.now();
         this.time = LocalTime.now();
         this.updateDate = null;
@@ -109,11 +112,11 @@ public class NotificationRequest {
         this.multicast = multicast;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -131,5 +134,13 @@ public class NotificationRequest {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public String getChangeField() {
+        return changeField;
+    }
+
+    public void setChangeField(String changeField) {
+        this.changeField = changeField;
     }
 }

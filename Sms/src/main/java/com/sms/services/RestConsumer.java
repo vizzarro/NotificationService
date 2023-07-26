@@ -18,12 +18,8 @@ import java.util.logging.Logger;
 public class RestConsumer {
     Logger logger= Logger.getLogger(RestConsumer.class.getName());
 
-    public NotificationResponseDTO getResponse(int id) {
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<NotificationResponseDTO> response = restTemplate.getForEntity("http://localhost:8084/notificationresponse/"+id, NotificationResponseDTO.class);
-        return response.getBody();
-    }
-    public NotificationResponseDTO smsHandler(String s, Throwable e){
+
+    public NotificationRequestDTO smsHandler(String s, Throwable e){
         return  null;
     }
     public String createSms(String message, int response){
@@ -58,10 +54,10 @@ public class RestConsumer {
 
     public void updateResponseState(int id, String state){
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<NotificationResponseDTO> request = new HttpEntity<>(
-                getResponse(id)
+        HttpEntity<NotificationRequestDTO> request = new HttpEntity<>(
+                getRequest(id)
         );
-        String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse/"+id+"/"+state, request, String.class);
+        String productCreateResponse = restTemplate.postForObject("http://localhost:8080/notificationrequest/"+id+"/"+state, request, String.class);
     }
 
 }

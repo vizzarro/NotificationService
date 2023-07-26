@@ -15,9 +15,9 @@ import java.util.logging.Logger;
 @Service
 public class RestConsumer {
     Logger logger= Logger.getLogger(RestConsumer.class.getName());
-    public NotificationResponseDTO getResponse(int id) {
+    public NotificationRequestDTO getResponse(int id) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<NotificationResponseDTO> response = restTemplate.getForEntity("http://localhost:8084/notificationresponse/"+id, NotificationResponseDTO.class);
+        ResponseEntity<NotificationRequestDTO> response = restTemplate.getForEntity("http://localhost:8080/notificationrequest/"+id, NotificationRequestDTO.class);
         return response.getBody();
     }
     public String createEmail(String subject, String message, String fieldPath,int response){
@@ -45,10 +45,10 @@ public class RestConsumer {
 
     public void updateResponseState(int id, String state){
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<NotificationResponseDTO> request = new HttpEntity<>(
+        HttpEntity<NotificationRequestDTO> request = new HttpEntity<>(
                 getResponse(id)
         );
-        String productCreateResponse = restTemplate.postForObject("http://localhost:8084/notificationresponse/"+id+"/"+state, request, String.class);
+        String productCreateResponse = restTemplate.postForObject("http://localhost:8080/notificationrequest/"+id+"/"+state, request, String.class);
     }
 
 

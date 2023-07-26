@@ -1,6 +1,7 @@
 package com.email.services;
 
 import com.email.model.dto.EmailDTO;
+import com.email.model.dto.NotificationRequestDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.email.model.dto.NotificationResponseDTO;
@@ -27,7 +28,7 @@ public class RedisConsumer implements MessageListener {
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
-        NotificationResponseDTO responseDTO = restConsumer.getResponse(Integer.parseInt(message.toString()));
+        NotificationRequestDTO responseDTO = restConsumer.getResponse(Integer.parseInt(message.toString()));
         try {
             com.email.model.Message message1 = new ObjectMapper().readValue(responseDTO.getMessage(), com.email.model.Message.class);
             message1.setText(message1.getText()+" "+responseDTO.getChangeField());

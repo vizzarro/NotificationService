@@ -26,7 +26,7 @@ public class RequestServices {
     private RestConsumer restConsumer;
     private final ChannelTopic topic;
     @Autowired
-   public RequestServices(RequestRepository requestRepository,ModelMapper modelMapper, RedisTemplate template, ChannelTopic topic, RestConsumer restConsumer){
+    public RequestServices(RequestRepository requestRepository,ModelMapper modelMapper, RedisTemplate template, ChannelTopic topic, RestConsumer restConsumer){
         this.requestRepository = requestRepository;
         this.modelMapper  = modelMapper;
         this.template = template;
@@ -41,6 +41,8 @@ public class RequestServices {
         requestRepository.save(request);
         //qui ci va un try catch
         template.convertAndSend(topic.getTopic(), request.getId()+"");
+
+
         return modelMapper.map(request, NotificationRequestDTO.class);
     }
     public NotificationRequestDTO update(NotificationRequestDTO r){
@@ -61,6 +63,8 @@ public class RequestServices {
         Function<NotificationRequest, NotificationRequestDTO> fMap = e->modelMapper.map(e,NotificationRequestDTO.class);
         return requestRepository.findAll().stream().map(fMap).collect(Collectors.toList());
     }
+
+
 
 
 }

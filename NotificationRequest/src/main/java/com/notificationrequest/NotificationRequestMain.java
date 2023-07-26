@@ -39,7 +39,7 @@ public class NotificationRequestMain {
         DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         ObjectMapper mapper = new ObjectMapper();
 
-        // Registro global do serializer/deserializer para datas sem horário
+
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer(localDateFormatter));
         simpleModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(localDateFormatter));

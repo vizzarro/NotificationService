@@ -41,8 +41,8 @@ public class RequestController {
          requestServices.delete(id);
     }
 
-    @PutMapping(path = "{id}") //qui d una variante è il patch(per oggetti complessi) dto
-    public NotificationRequestDTO update(@PathVariable(value = "id") long id,@RequestBody NotificationRequestDTO r){
+    @PostMapping(path = "{id}") //qui d una variante è il patch(per oggetti complessi) dto
+    public NotificationRequestDTO update(@PathVariable(value = "id") int id,@RequestBody NotificationRequestDTO r){
        r.setId(id);
        return requestServices.update(r);
     }
@@ -62,6 +62,7 @@ public class RequestController {
     public  long countRequests(){
         return requestServices.count();
     }
+
 
 
 }

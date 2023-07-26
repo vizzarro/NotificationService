@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class NotificationRequestDTO {
-    private Long id;
+    private int id;
     private State state;
     private String message;
     private Type type;
@@ -29,9 +29,11 @@ public class NotificationRequestDTO {
     private Priority priority;
     private boolean multicast;
 
+    private String changeField;
+
     public NotificationRequestDTO(){}
 
-    public NotificationRequestDTO(String state, String message, String type, String action, String priority, Boolean multicast){
+    public NotificationRequestDTO(String state, String message, String type, String action, String priority, Boolean multicast, String changeField){
         this.state = State.valueOf(state);
         this.message= message;
         this.type = Type.valueOf(type);
@@ -41,13 +43,14 @@ public class NotificationRequestDTO {
         this.updateDate = null;
         this.priority = Priority.valueOf(priority);
         this.multicast = multicast;
+        this.changeField = changeField;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -128,5 +131,14 @@ public class NotificationRequestDTO {
 
     public void setAction(Action action) {
         this.action = action;
+    }
+
+    public void setChangeField(String changeField) {
+        this.changeField = changeField;
+    }
+
+
+    public String getChangeField() {
+        return changeField;
     }
 }
